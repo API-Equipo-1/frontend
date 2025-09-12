@@ -6,25 +6,28 @@
     "price": 5999.99,
     "stock": 25,
     "category": "Electrónica",
-  "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80"
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80",
+    "extendedDescription": "Auriculares Bluetooth con sonido de alta calidad, micrófono incorporado y hasta 20 horas de batería. Perfectos para música, llamadas y más. Compatibles con todos los dispositivos Bluetooth. Diseño ergonómico para mayor comodidad durante largas sesiones de uso. Incluye estuche de carga portátil."
   },
   {
     "id": 2,
     "name": "Zapatillas Deportivas",
     "description": "Zapatillas cómodas para running y entrenamiento.",
-    "price": 8999.50,
+    "price": 8999.5,
     "stock": 40,
     "category": "Calzado",
-  "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80"
+    "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80",
+    "extendedDescription": "Zapatillas deportivas diseñadas para ofrecer soporte y comodidad durante tus entrenamientos. Suela antideslizante y material transpirable para mantener tus pies frescos. Disponibles en varios colores y tallas. Ideales para correr, caminar o cualquier actividad física."
   },
   {
     "id": 3,
     "name": "Smartwatch",
     "description": "Reloj inteligente con monitor de actividad y notificaciones.",
-    "price": 12999.00,
+    "price": 12999.0,
     "stock": 15,
     "category": "Electrónica",
-  "image": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80"
+    "image": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
+    "extendedDescription": "Smartwatch con pantalla táctil, seguimiento de actividad física, monitor de ritmo cardíaco y notificaciones de llamadas y mensajes. Resistente al agua y con múltiples opciones de personalización. Compatible con iOS y Android. Batería de larga duración para uso diario."
   },
   {
     "id": 4,
@@ -33,16 +36,18 @@
     "price": 4999.99,
     "stock": 30,
     "category": "Accesorios",
-  "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80"
+    "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+    "extendedDescription": "Mochila urbana con múltiples compartimentos para organizar tus pertenencias. Fabricada con materiales resistentes al agua y duraderos. Correas acolchadas para mayor comodidad y soporte. Perfecta para la escuela, el trabajo o viajes cortos."
   },
   {
     "id": 5,
     "name": "Campera de Abrigo",
     "description": "Campera térmica para bajas temperaturas.",
-    "price": 15999.00,
+    "price": 15999.0,
     "stock": 20,
     "category": "Indumentaria",
-  "image": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80"
+    "image": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
+    "extendedDescription": "Campera de abrigo confeccionada con materiales térmicos para mantener el calor corporal en climas fríos. Diseño moderno y funcional con capucha ajustable y múltiples bolsillos. Ideal para actividades al aire libre durante el invierno."
   },
   {
     "id": 6,
@@ -51,16 +56,18 @@
     "price": 3499.99,
     "stock": 50,
     "category": "Electrónica",
-  "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80"
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80",
+    "extendedDescription": "Mouse gamer con sensor óptico de alta precisión, ideal para juegos que requieren movimientos rápidos y exactos. Cuenta con luces RGB personalizables, varios botones programables y diseño ergonómico para largas sesiones de juego. Compatible con PC y Mac."
   },
   {
     "id": 7,
     "name": "Botella Térmica",
     "description": "Botella de acero inoxidable, mantiene la temperatura por 12 horas.",
-    "price": 2499.00,
+    "price": 2499.0,
     "stock": 60,
     "category": "Accesorios",
-  "image": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80"
+    "image": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
+    "extendedDescription": "Botella térmica de acero inoxidable, perfecta para mantener tus bebidas calientes o frías durante todo el día. Capacidad de 500 ml, diseño a prueba de fugas y tapa con cierre seguro. Ideal para llevar café, té, agua o cualquier bebida a donde vayas."
   },
   {
     "id": 8,
@@ -69,6 +76,7 @@
     "price": 1999.99,
     "stock": 100,
     "category": "Indumentaria",
-  "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80"
+    "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
+    "extendedDescription": "Remera básica confeccionada en algodón suave y transpirable. Disponible en varios colores y tallas. Ideal para uso diario, combina fácilmente con cualquier outfit. Corte clásico y cómodo para todas las edades."
   }
-] 
+]
