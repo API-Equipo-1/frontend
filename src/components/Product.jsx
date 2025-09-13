@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import "./Product.css";
+import { productService } from "../services/productService";
+import "../styles/Product.css";
 
 export const Product = () => {
   let { id } = useParams();
@@ -9,16 +10,14 @@ export const Product = () => {
   const [stock, setStock] = useState(0);
 
   useEffect(() => {
-    fetch(`/products.json`)
-      .then((response) => response.json())
-      .then((data) => {
-        const foundProduct = data.find(
-          (product) => product.id === parseInt(id)
-        );
+    productService.getProductById(id)
+      .then((foundProduct) => {
         setSelectedProduct(foundProduct);
         setStock(foundProduct.stock);
       })
-      .catch((error) => console.error("Error fetching product:", error));
+      .catch((error) => {
+        console.error("Error fetching product:", error);
+      });
   }, [id]);
 
   const handleAddToCart = () => {

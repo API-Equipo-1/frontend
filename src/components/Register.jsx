@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { User } from '../models/User';
 import { userService } from '../services/userService';
 import '../styles/Register.css';
@@ -14,6 +15,7 @@ const Register = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const validateForm = async () => {
     // First, validate the form data using the User class
@@ -74,17 +76,8 @@ const Register = () => {
 
       alert('¡Registro exitoso! Usuario creado correctamente.');
       
-      // Reset form
-      setFormData({
-        username: '',
-        email: '',
-        password: '',
-        firstName: '',
-        lastName: ''
-      });
-
-      // Clear any existing errors
-      setErrors({});
+      // Navigate to login page
+      navigate('/login');
 
     } catch (error) {
       console.error('Error al registrar usuario:', error);
@@ -201,7 +194,7 @@ const Register = () => {
         </form>
 
         <p className="login-link">
-          ¿Ya tienes cuenta? <a href="#login">Inicia Sesión</a>
+          ¿Ya tienes cuenta? <Link to="/login">Inicia Sesión</Link>
         </p>
       </div>
     </div>

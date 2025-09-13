@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { redirect } from "react-router-dom";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 export const ProductCard = (product) => {
   const [stock, setStock] = useState(product.stock);

@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { userService } from '../services/userService';
+import { useAuth } from '../hooks/useAuth';
 import '../styles/Register.css';
 
 const Login = () => {
@@ -10,6 +12,8 @@ const Login = () => {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const validateForm = () => {
     const newErrors = {};
@@ -60,22 +64,12 @@ const Login = () => {
       const loginResult = await userService.loginUser(formData.email, formData.password);
 
       if (loginResult.success) {
-        alert(`¡Bienvenido/a ${loginResult.user.firstName}! Has iniciado sesión correctamente.`);
+        // Store user data in auth context
+        login(loginResult.user);
         
-        // Here you would typically:
-        // - Store user data in localStorage/sessionStorage
-        // - Update global state (Context/Redux)
-        // - Redirect to dashboard/home page
+        // Navigate to catalog
+        navigate('/catalog');
         
-        // For now, just reset the form
-        setFormData({
-          email: '',
-          password: ''
-        });
-
-        // Clear any existing errors
-        setErrors({});
-
       } else {
         setErrors({ 
           general: loginResult.message || 'Credenciales inválidas. Verifica tu email y contraseña.' 
@@ -147,7 +141,7 @@ const Login = () => {
         </form>
 
         <p className="login-link">
-          ¿No tienes cuenta? <a href="#register">Regístrate</a>
+          ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
         </p>
       </div>
     </div>

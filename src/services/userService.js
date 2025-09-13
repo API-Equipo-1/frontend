@@ -68,48 +68,32 @@ export const api = {
   }
 };
 
-/**
- * User-specific API functions
- */
+
 export const userService = {
-  /**
-   * Get all users
-   */
+
   async getAllUsers() {
     return await api.get('/users');
   },
 
-  /**
-   * Get user by ID
-   */
   async getUserById(id) {
     return await api.get(`/users/${id}`);
   },
 
-  /**
-   * Create a new user
-   */
+
   async createUser(userData) {
     return await api.post('/users', userData);
   },
 
-  /**
-   * Update user
-   */
   async updateUser(id, userData) {
     return await api.put(`/users/${id}`, userData);
   },
 
-  /**
-   * Delete user
-   */
+
   async deleteUser(id) {
     return await api.delete(`/users/${id}`);
   },
 
-  /**
-   * Check if username exists
-   */
+
   async checkUsernameExists(username) {
     try {
       const users = await api.get(`/users?username=${username.toLowerCase()}`);
@@ -120,9 +104,6 @@ export const userService = {
     }
   },
 
-  /**
-   * Check if email exists
-   */
   async checkEmailExists(email) {
     try {
       const users = await api.get(`/users?email=${email.toLowerCase()}`);
@@ -133,9 +114,7 @@ export const userService = {
     }
   },
 
-  /**
-   * Login user (find by email and password)
-   */
+
   async loginUser(email, password) {
     try {
       const users = await api.get(`/users?email=${email.toLowerCase()}&password=${password}`);
@@ -150,9 +129,6 @@ export const userService = {
     }
   },
 
-  /**
-   * Validate user registration data against existing users
-   */
   async validateRegistration(userData) {
     const errors = {};
 
@@ -172,9 +148,6 @@ export const userService = {
     };
   },
 
-  /**
-   * Clear all users (for testing purposes)
-   */
   async clearAllUsers() {
     try {
       const users = await this.getAllUsers();

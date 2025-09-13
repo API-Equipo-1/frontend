@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "username": "demo_user",
       "email": "demo@example.com",
       "password": "Password123",
@@ -11,7 +11,7 @@
       "isActive": true
     },
     {
-      "id": 2,
+      "id": "2",
       "username": "Messi10",
       "email": "messi@gmail.com",
       "firstName": "Lionel",
@@ -21,7 +21,7 @@
       "password": "LioMessi22"
     },
     {
-      "id": 3,
+      "id": "3",
       "username": "papaHet",
       "email": "jhetfield@gmail.com",
       "firstName": "James",
@@ -29,6 +29,16 @@
       "registeredAt": "2025-09-13T13:39:44.198Z",
       "isActive": true,
       "password": "papaHet81"
+    },
+    {
+      "id": null,
+      "username": "SuperMax",
+      "email": "maxver@redbull.com",
+      "firstName": "Max",
+      "lastName": "Verstappen",
+      "registeredAt": "2025-09-13T15:13:43.167Z",
+      "isActive": true,
+      "password": "superMax33"
     }
   ]
 }
