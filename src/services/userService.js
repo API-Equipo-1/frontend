@@ -1,12 +1,5 @@
-/**
- * API service for interacting with JSON Server
- */
-
 const API_BASE_URL = 'http://localhost:3001';
 
-/**
- * Generic API utility functions
- */
 export const api = {
   async get(endpoint) {
     try {

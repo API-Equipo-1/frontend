@@ -1,4 +1,3 @@
-// Validation utilities for forms
 
 export const validators = {
   email: (email) => {
