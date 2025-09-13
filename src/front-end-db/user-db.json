@@ -39,6 +39,16 @@
       "registeredAt": "2025-09-13T15:13:43.167Z",
       "isActive": true,
       "password": "superMax33"
+    },
+    {
+      "id": null,
+      "username": "batman",
+      "email": "batman@gmail.com",
+      "firstName": "Bruce",
+      "lastName": "Wayne",
+      "registeredAt": "2025-09-13T15:56:21.316Z",
+      "isActive": true,
+      "password": "Batman11"
     }
   ]
 }
