@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { validators, errorMessages, userStorage } from '../utils/validation';
+import { User } from '../models/User';
+import { userService } from '../services/userService';
 import './Register.css';
 
 const Register = () => {
@@ -14,50 +15,29 @@ const Register = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const validateForm = () => {
-    const newErrors = {};
-
-    // Username validation
-    if (!formData.username.trim()) {
-      newErrors.username = errorMessages.username.required;
-    } else if (!validators.username(formData.username)) {
-      newErrors.username = errorMessages.username.invalid;
-    } else if (userStorage.checkUsernameExists(formData.username)) {
-      newErrors.username = 'Este nombre de usuario ya está en uso';
+  const validateForm = async () => {
+    // First, validate the form data using the User class
+    const validation = User.validate(formData);
+    
+    if (!validation.isValid) {
+      setErrors(validation.errors);
+      return false;
     }
 
-    // Email validation
-    if (!formData.email.trim()) {
-      newErrors.email = errorMessages.email.required;
-    } else if (!validators.email(formData.email)) {
-      newErrors.email = errorMessages.email.invalid;
-    } else if (userStorage.checkEmailExists(formData.email)) {
-      newErrors.email = 'Este email ya está registrado';
+    // Then check for duplicates via API
+    try {
+      const apiValidation = await userService.validateRegistration(formData);
+      if (!apiValidation.isValid) {
+        setErrors(apiValidation.errors);
+        return false;
+      }
+    } catch (error) {
+      console.error('Error validating registration:', error);
+      setErrors({ general: 'Error de conexión. Inténtalo de nuevo.' });
+      return false;
     }
 
-    // Password validation
-    if (!formData.password.trim()) {
-      newErrors.password = errorMessages.password.required;
-    } else if (!validators.password(formData.password)) {
-      newErrors.password = errorMessages.password.invalid;
-    }
-
-    // First name validation
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = errorMessages.firstName.required;
-    } else if (!validators.name(formData.firstName)) {
-      newErrors.firstName = errorMessages.firstName.invalid;
-    }
-
-    // Last name validation
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = errorMessages.lastName.required;
-    } else if (!validators.name(formData.lastName)) {
-      newErrors.lastName = errorMessages.lastName.invalid;
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return true;
   };
 
   const handleInputChange = (e) => {
@@ -79,43 +59,38 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!validateForm()) {
+    if (!(await validateForm())) {
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Create User instance from form data
+      const newUser = User.fromFormData(formData);
       
-      // Save user data using utility
-      const result = userStorage.save({
-        username: formData.username,
-        email: formData.email,
-        password: formData.password, // In real app, this should be hashed
-        firstName: formData.firstName,
-        lastName: formData.lastName
+      // Save to JSON Server
+      await userService.createUser(newUser.toJSON());
+
+      alert('¡Registro exitoso! Usuario creado correctamente.');
+      
+      // Reset form
+      setFormData({
+        username: '',
+        email: '',
+        password: '',
+        firstName: '',
+        lastName: ''
       });
 
-      if (result.success) {
-        alert('¡Registro exitoso! Usuario creado correctamente.');
-        
-        // Reset form
-        setFormData({
-          username: '',
-          email: '',
-          password: '',
-          firstName: '',
-          lastName: ''
-        });
-      } else {
-        alert(result.error || 'Error al registrar usuario. Inténtalo de nuevo.');
-      }
+      // Clear any existing errors
+      setErrors({});
 
     } catch (error) {
       console.error('Error al registrar usuario:', error);
-      alert('Error al registrar usuario. Inténtalo de nuevo.');
+      setErrors({ 
+        general: 'Error al registrar usuario. Verifica que el servidor esté funcionando.' 
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -128,6 +103,12 @@ const Register = () => {
         <p className="register-subtitle">Únete a nuestra tienda</p>
         
         <form onSubmit={handleSubmit} className="register-form">
+          {errors.general && (
+            <div className="error-message general-error">
+              {errors.general}
+            </div>
+          )}
+          
           <div className="form-group">
             <label htmlFor="username" className="form-label">
               Nombre de Usuario

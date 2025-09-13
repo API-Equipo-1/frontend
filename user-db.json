@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "demo_user",
+      "email": "demo@example.com",
+      "password": "Password123",
+      "firstName": "Usuario",
+      "lastName": "Demo",
+      "registeredAt": "2025-09-13T10:00:00.000Z",
+      "isActive": true
+    },
+    {
+      "id": null,
+      "username": "Messi10",
+      "email": "messi@gmail.com",
+      "firstName": "Lionel",
+      "lastName": "Messi",
+      "registeredAt": "2025-09-13T13:17:56.687Z",
+      "isActive": true,
+      "password": "LioMessi22"
+    },
+    {
+      "id": null,
+      "username": "papaHet",
+      "email": "jhetfield@gmail.com",
+      "firstName": "James",
+      "lastName": "Hetfield",
+      "registeredAt": "2025-09-13T13:39:44.198Z",
+      "isActive": true,
+      "password": "papaHet81"
+    }
+  ]
+}
