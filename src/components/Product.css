@@ -1,0 +1,22 @@
+.detalle-producto {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
+
+.boton-detalle {
+  background-color: white;
+  color: black;
+}
+
+button a {
+  text-decoration: none;
+  color: black;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+}
