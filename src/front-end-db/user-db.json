@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": "1",
+      "id": 1,
       "username": "demo_user",
       "email": "demo@example.com",
       "password": "Password123",
@@ -11,7 +11,7 @@
       "isActive": true
     },
     {
-      "id": null,
+      "id": 2,
       "username": "Messi10",
       "email": "messi@gmail.com",
       "firstName": "Lionel",
@@ -21,7 +21,7 @@
       "password": "LioMessi22"
     },
     {
-      "id": null,
+      "id": 3,
       "username": "papaHet",
       "email": "jhetfield@gmail.com",
       "firstName": "James",
