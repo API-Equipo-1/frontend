@@ -31,7 +31,7 @@
       "password": "papaHet81"
     },
     {
-      "id": null,
+      "id": "4",
       "username": "SuperMax",
       "email": "maxver@redbull.com",
       "firstName": "Max",
@@ -129,6 +129,16 @@
       "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
       "extendedDescription": "Remera básica confeccionada en algodón suave y transpirable. Disponible en varios colores y tallas. Ideal para uso diario, combina fácilmente con cualquier outfit. Corte clásico y cómodo para todas las edades.",
       "createdBy": "1"
+    },
+    {
+      "id": "9",
+      "name": "RB18",
+      "description": "RedBull formula 1 car 2018",
+      "category": "Vehiculo",
+      "price": 1000000000000000,
+      "stock": 1,
+      "image": "https://hips.hearstapps.com/hmg-prod/images/max-rb18-1645609871.jpg",
+      "createdBy": "4"
     }
   ]
 }

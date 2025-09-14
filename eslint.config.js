@@ -34,7 +34,15 @@ export default defineConfig([
     rules: {
       ...reactHooks.configs.recommended.rules,
       ...reactRefresh.configs.vite.rules,
+
+      // indentation: use TABs (fixable)
+      'indent': ['error', 'tab'],
+
+      // if you prefer spaces instead, replace the above with:
+      // 'indent': ['error', 2],
+
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+
       // Import validation rules
       'import/no-unresolved': 'error',
       'import/named': 'error',
