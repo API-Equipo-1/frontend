@@ -1,22 +1,83 @@
-export const productService = {
-  
-  async getAllProducts() {
+const API_BASE_URL = 'http://localhost:3001';
+
+export const api = {
+  async get(endpoint) {
     try {
-      const response = await fetch('/src/front-end-db/products.json');
+      const response = await fetch(`${API_BASE_URL}${endpoint}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       return await response.json();
     } catch (error) {
-      console.error('Error fetching products:', error);
+      console.error('API GET error:', error);
       throw error;
     }
+  },
+
+  async post(endpoint, data) {
+    try {
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('API POST error:', error);
+      throw error;
+    }
+  },
+
+  async put(endpoint, data) {
+    try {
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('API PUT error:', error);
+      throw error;
+    }
+  },
+
+  async delete(endpoint) {
+    try {
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        method: 'DELETE'
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('API DELETE error:', error);
+      throw error;
+    }
+  }
+};
+
+export const productService = {
+  
+  async getAllProducts() {
+    return await api.get('/products');
   },
 
   async getProductById(id) {
     try {
       const products = await this.getAllProducts();
-      const product = products.find(p => p.id === parseInt(id));
+      const product = products.find(p => p.id == id);
       if (!product) {
         throw new Error(`Product with id ${id} not found`);
       }
@@ -66,6 +127,37 @@ export const productService = {
       return products.filter(p => p.price >= minPrice && p.price <= maxPrice);
     } catch (error) {
       console.error('Error fetching products by price range:', error);
+      throw error;
+    }
+  },
+
+  async createProduct(newProduct) {
+    try {
+      const products = await this.getAllProducts();
+      const newId = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
+      const productToAdd = { id: newId, ...newProduct };
+      return await api.post('/products', productToAdd);
+    } catch (error) {
+      console.error('Error creating product:', error);
+      throw error;
+    }
+  },
+
+  async deleteProduct(id) {
+    return await api.delete(`/products/${id}`);
+  },
+
+  async updateProduct(id, updatedFields) {
+    try {
+      const products = await this.getAllProducts();
+      const productIndex = products.findIndex(p => p.id == id);
+      if (productIndex === -1) {
+        throw new Error(`Product with id ${id} not found`);
+      }
+      const updatedProduct = { ...products[productIndex], ...updatedFields };
+      return await api.put(`/products/${Number(id)}`, updatedProduct);
+    } catch (error) {
+      console.error('Error updating product:', error);
       throw error;
     }
   },

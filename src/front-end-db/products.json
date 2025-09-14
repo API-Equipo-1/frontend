@@ -7,7 +7,8 @@
     "stock": 25,
     "category": "Electrónica",
     "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80",
-    "extendedDescription": "Auriculares Bluetooth con sonido de alta calidad, micrófono incorporado y hasta 20 horas de batería. Perfectos para música, llamadas y más. Compatibles con todos los dispositivos Bluetooth. Diseño ergonómico para mayor comodidad durante largas sesiones de uso. Incluye estuche de carga portátil."
+    "extendedDescription": "Auriculares Bluetooth con sonido de alta calidad, micrófono incorporado y hasta 20 horas de batería. Perfectos para música, llamadas y más. Compatibles con todos los dispositivos Bluetooth. Diseño ergonómico para mayor comodidad durante largas sesiones de uso. Incluye estuche de carga portátil.",
+    "createdBy": "1"
   },
   {
     "id": 2,
@@ -17,7 +18,8 @@
     "stock": 40,
     "category": "Calzado",
     "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80",
-    "extendedDescription": "Zapatillas deportivas diseñadas para ofrecer soporte y comodidad durante tus entrenamientos. Suela antideslizante y material transpirable para mantener tus pies frescos. Disponibles en varios colores y tallas. Ideales para correr, caminar o cualquier actividad física."
+    "extendedDescription": "Zapatillas deportivas diseñadas para ofrecer soporte y comodidad durante tus entrenamientos. Suela antideslizante y material transpirable para mantener tus pies frescos. Disponibles en varios colores y tallas. Ideales para correr, caminar o cualquier actividad física.",
+    "createdBy": "1"
   },
   {
     "id": 3,
@@ -27,7 +29,8 @@
     "stock": 15,
     "category": "Electrónica",
     "image": "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80",
-    "extendedDescription": "Smartwatch con pantalla táctil, seguimiento de actividad física, monitor de ritmo cardíaco y notificaciones de llamadas y mensajes. Resistente al agua y con múltiples opciones de personalización. Compatible con iOS y Android. Batería de larga duración para uso diario."
+    "extendedDescription": "Smartwatch con pantalla táctil, seguimiento de actividad física, monitor de ritmo cardíaco y notificaciones de llamadas y mensajes. Resistente al agua y con múltiples opciones de personalización. Compatible con iOS y Android. Batería de larga duración para uso diario.",
+    "createdBy": "1"
   },
   {
     "id": 4,
@@ -37,7 +40,8 @@
     "stock": 30,
     "category": "Accesorios",
     "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
-    "extendedDescription": "Mochila urbana con múltiples compartimentos para organizar tus pertenencias. Fabricada con materiales resistentes al agua y duraderos. Correas acolchadas para mayor comodidad y soporte. Perfecta para la escuela, el trabajo o viajes cortos."
+    "extendedDescription": "Mochila urbana con múltiples compartimentos para organizar tus pertenencias. Fabricada con materiales resistentes al agua y duraderos. Correas acolchadas para mayor comodidad y soporte. Perfecta para la escuela, el trabajo o viajes cortos.",
+    "createdBy": "1"
   },
   {
     "id": 5,
@@ -47,7 +51,8 @@
     "stock": 20,
     "category": "Indumentaria",
     "image": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=400&q=80",
-    "extendedDescription": "Campera de abrigo confeccionada con materiales térmicos para mantener el calor corporal en climas fríos. Diseño moderno y funcional con capucha ajustable y múltiples bolsillos. Ideal para actividades al aire libre durante el invierno."
+    "extendedDescription": "Campera de abrigo confeccionada con materiales térmicos para mantener el calor corporal en climas fríos. Diseño moderno y funcional con capucha ajustable y múltiples bolsillos. Ideal para actividades al aire libre durante el invierno.",
+    "createdBy": "1"
   },
   {
     "id": 6,
@@ -57,7 +62,8 @@
     "stock": 50,
     "category": "Electrónica",
     "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=400&q=80",
-    "extendedDescription": "Mouse gamer con sensor óptico de alta precisión, ideal para juegos que requieren movimientos rápidos y exactos. Cuenta con luces RGB personalizables, varios botones programables y diseño ergonómico para largas sesiones de juego. Compatible con PC y Mac."
+    "extendedDescription": "Mouse gamer con sensor óptico de alta precisión, ideal para juegos que requieren movimientos rápidos y exactos. Cuenta con luces RGB personalizables, varios botones programables y diseño ergonómico para largas sesiones de juego. Compatible con PC y Mac.",
+    "createdBy": "1"
   },
   {
     "id": 7,
@@ -67,7 +73,8 @@
     "stock": 60,
     "category": "Accesorios",
     "image": "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80",
-    "extendedDescription": "Botella térmica de acero inoxidable, perfecta para mantener tus bebidas calientes o frías durante todo el día. Capacidad de 500 ml, diseño a prueba de fugas y tapa con cierre seguro. Ideal para llevar café, té, agua o cualquier bebida a donde vayas."
+    "extendedDescription": "Botella térmica de acero inoxidable, perfecta para mantener tus bebidas calientes o frías durante todo el día. Capacidad de 500 ml, diseño a prueba de fugas y tapa con cierre seguro. Ideal para llevar café, té, agua o cualquier bebida a donde vayas.",
+    "createdBy": "1"
   },
   {
     "id": 8,
@@ -77,6 +84,7 @@
     "stock": 100,
     "category": "Indumentaria",
     "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80",
-    "extendedDescription": "Remera básica confeccionada en algodón suave y transpirable. Disponible en varios colores y tallas. Ideal para uso diario, combina fácilmente con cualquier outfit. Corte clásico y cómodo para todas las edades."
+    "extendedDescription": "Remera básica confeccionada en algodón suave y transpirable. Disponible en varios colores y tallas. Ideal para uso diario, combina fácilmente con cualquier outfit. Corte clásico y cómodo para todas las edades.",
+    "createdBy": "1"
   }
 ]

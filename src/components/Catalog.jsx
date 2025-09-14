@@ -49,6 +49,22 @@ export const Catalog = () => {
         <div>
           <h1 style={{ margin: 0 }}>Cátalogo de productos</h1>
           {user && (
+            <button 
+              onClick={() => navigate('/product-management')}
+              style={{
+                marginLeft: '1rem',
+                padding: '0.5rem 1rem',
+                backgroundColor: '#4CAF50',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer'
+              }}
+            >
+              Gestionar Mis Productos
+            </button>
+          )}
+          {user && (
             <p style={{ 
               margin: '0.5rem 0 0 0', 
               color: '#6b7280', 
