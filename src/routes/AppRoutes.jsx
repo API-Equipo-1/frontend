@@ -9,6 +9,7 @@ import Checkout from "../components/Checkout";
 import { ProductTable } from "../components/management/ProductTable.jsx";
 import { ProductForm } from "../components/management/ProductForm.jsx";
 import { ProductStats } from "../components/management/ProductStats.jsx";
+import { Navbar } from "../components/Navbar.jsx";
 
 const AppRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const AppRoutes = () => {
         path="/catalog" 
         element={
           <ProtectedRoute>
+            <Navbar/>
             <Catalog />
           </ProtectedRoute>
         } 
@@ -29,6 +31,7 @@ const AppRoutes = () => {
         path="/product/:id" 
         element={
           <ProtectedRoute>
+            <Navbar/>
             <Product />
           </ProtectedRoute>
         } 
@@ -37,6 +40,7 @@ const AppRoutes = () => {
         path="/cart" 
         element={
           <ProtectedRoute>
+            <Navbar/>
             <CartPage />
           </ProtectedRoute>
         } 
@@ -45,6 +49,7 @@ const AppRoutes = () => {
         path="/checkout" 
         element={
           <ProtectedRoute>
+            <Navbar/>
             <Checkout />
           </ProtectedRoute>
         } 

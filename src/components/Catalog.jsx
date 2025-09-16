@@ -51,7 +51,7 @@ export const Catalog = () => {
         borderBottom: '1px solid #e5e7eb',
         marginBottom: '2rem'
       }}>
-        <div>
+        <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}> 
           <h1 style={{ margin: 0 }}>Cátalogo de productos</h1>
           {user && (
             <button 
@@ -63,7 +63,8 @@ export const Catalog = () => {
                 color: 'white',
                 border: 'none',
                 borderRadius: '4px',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                width: '20vw'
               }}
             >
               Gestionar Mis Productos
@@ -80,7 +81,8 @@ export const Catalog = () => {
                 border: 'none',
                 borderRadius: '4px',
                 cursor: 'pointer',
-                position: 'relative'
+                position: 'relative',
+                width: '20vw'
               }}
             >
               🛒 Ver Carrito
@@ -104,7 +106,6 @@ export const Catalog = () => {
           )}
           {user && (
             <p style={{ 
-              margin: '0.5rem 0 0 0', 
               color: '#6b7280', 
               fontSize: '0.875rem' 
             }}>
@@ -112,20 +113,6 @@ export const Catalog = () => {
             </p>
           )}
         </div>
-        <button
-          onClick={handleLogout}
-          style={{
-            backgroundColor: '#374151',
-            color: 'white',
-            border: 'none',
-            borderRadius: '6px',
-            padding: '0.5rem 1rem',
-            cursor: 'pointer',
-            fontSize: '0.875rem'
-          }}
-        >
-          Cerrar Sesión
-        </button>
       </header>
 
       <div className="catalog-content" style={{ display: 'flex', gap: '2rem' }}>
