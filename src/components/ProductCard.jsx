@@ -1,14 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 export const ProductCard = (product) => {
+  const { agregarAlCarrito, carrito, productosOriginales } = useCart();
   const [stock, setStock] = useState(product.stock);
+
+  // Update stock based on cart contents
+  useEffect(() => {
+    const itemInCart = carrito.find(item => item.id === product.id);
+    const quantityInCart = itemInCart ? itemInCart.cantidad : 0;
+    setStock(product.stock - quantityInCart);
+  }, [carrito, product.stock, product.id]);
 
   const handleAddToCart = () => {
     if (stock > 0) {
-      setStock(stock - 1);
+      agregarAlCarrito(product);
       console.log(`Agregando ${product.name} al carrito`);
-      console.log(`Stock restante de ${product.name}: ${stock - 1}`);
     }
   };
 

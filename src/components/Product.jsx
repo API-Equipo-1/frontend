@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 import { productService } from "../services/productService";
 import "../styles/Product.css";
 
 export const Product = () => {
   let { id } = useParams();
+  const navigate = useNavigate();
+  const { agregarAlCarrito, carrito } = useCart();
 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [stock, setStock] = useState(0);
@@ -13,19 +16,25 @@ export const Product = () => {
     productService.getProductById(id)
       .then((foundProduct) => {
         setSelectedProduct(foundProduct);
-        setStock(foundProduct.stock);
+        // Calculate available stock based on cart contents
+        const itemInCart = carrito.find(item => item.id === foundProduct.id);
+        const quantityInCart = itemInCart ? itemInCart.cantidad : 0;
+        setStock(foundProduct.stock - quantityInCart);
       })
       .catch((error) => {
         console.error("Error fetching product:", error);
       });
-  }, [id]);
+  }, [id, carrito]);
 
   const handleAddToCart = () => {
-    if (stock > 0) {
-      setStock(stock - 1);
+    if (stock > 0 && selectedProduct) {
+      agregarAlCarrito(selectedProduct);
       console.log(`Agregando ${selectedProduct.name} al carrito`);
-      console.log(`Stock restante de ${selectedProduct.name}: ${stock - 1}`);
     }
+  };
+
+  const handleBackToCatalog = () => {
+    navigate('/catalog');
   };
 
   return (
@@ -47,8 +56,8 @@ export const Product = () => {
                 >
                   {stock === 0 ? "Sin stock" : "Agregar al carrito"}
                 </button>
-                <button className="boton-detalle">
-                  <a href="/">Volver al catálogo</a>
+                <button className="boton-detalle" onClick={handleBackToCatalog}>
+                  Volver al catálogo
                 </button>
               </div>
             </div>

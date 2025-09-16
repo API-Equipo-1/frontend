@@ -1,0 +1,59 @@
+.nav {
+    background-color: lightblue;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+.site-title {
+    font-size: 2rem;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+}
+
+.nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+.nav a {
+    color: inherit;
+    text-decoration: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: .25rem;
+}
+
+.nav li.active {
+    background-color: rgb(165, 163, 163);
+}
+
+.nav li:hover {
+    background-color: brown;
+}
+
+button {
+    text-decoration: none;
+    border-radius: 0%;
+    height: 100%;
+}
+
+.nav button {
+    display: flex;
+    background-color: brown;
+    border-radius: 4px;
+    height: 5vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav button:hover {
+    background-color: red;
+}
