@@ -8,7 +8,7 @@ export const ProductCard = (product) => {
 
   // Update stock based on cart contents
   useEffect(() => {
-    const itemInCart = carrito.find(item => item.id === product.id);
+    const itemInCart = carrito.find((item) => item.id === product.id);
     const quantityInCart = itemInCart ? itemInCart.cantidad : 0;
     setStock(product.stock - quantityInCart);
   }, [carrito, product.stock, product.id]);

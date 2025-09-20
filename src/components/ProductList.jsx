@@ -1,7 +1,11 @@
-import { useState, useEffect } from 'react';
-import './ProductList.css';
+import { useState, useEffect } from "react";
+import "..sstyles/ProductList.css";
 
-const ProductList = ({ onAgregarAlCarrito, carrito, onProductosOriginales }) => {
+const ProductList = ({
+  onAgregarAlCarrito,
+  carrito,
+  onProductosOriginales,
+}) => {
   const [productos, setProductos] = useState([]);
   const [productosOriginales, setProductosOriginales] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,9 +16,9 @@ const ProductList = ({ onAgregarAlCarrito, carrito, onProductosOriginales }) => 
     const fetchProductos = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:3001/productos');
+        const response = await fetch("http://localhost:3001/productos");
         if (!response.ok) {
-          throw new Error('Error al cargar productos');
+          throw new Error("Error al cargar productos");
         }
         const data = await response.json();
         setProductos(data);
@@ -24,7 +28,7 @@ const ProductList = ({ onAgregarAlCarrito, carrito, onProductosOriginales }) => 
         }
       } catch (err) {
         setError(err.message);
-        console.error('Error fetching productos:', err);
+        console.error("Error fetching productos:", err);
       } finally {
         setLoading(false);
       }
@@ -36,12 +40,12 @@ const ProductList = ({ onAgregarAlCarrito, carrito, onProductosOriginales }) => 
   // useEffect para sincronizar stock con el carrito
   useEffect(() => {
     if (productosOriginales.length > 0) {
-      const productosActualizados = productosOriginales.map(producto => {
-        const itemEnCarrito = carrito.find(item => item.id === producto.id);
+      const productosActualizados = productosOriginales.map((producto) => {
+        const itemEnCarrito = carrito.find((item) => item.id === producto.id);
         const cantidadEnCarrito = itemEnCarrito ? itemEnCarrito.cantidad : 0;
         return {
           ...producto,
-          stock: producto.stock - cantidadEnCarrito
+          stock: producto.stock - cantidadEnCarrito,
         };
       });
       setProductos(productosActualizados);
@@ -49,7 +53,8 @@ const ProductList = ({ onAgregarAlCarrito, carrito, onProductosOriginales }) => 
   }, [carrito, productosOriginales]);
 
   const handleAgregarAlCarrito = (producto) => {
-    const stockDisponible = productos.find(p => p.id === producto.id)?.stock || 0;
+    const stockDisponible =
+      productos.find((p) => p.id === producto.id)?.stock || 0;
     if (stockDisponible > 0) {
       onAgregarAlCarrito(producto);
     }
@@ -67,26 +72,28 @@ const ProductList = ({ onAgregarAlCarrito, carrito, onProductosOriginales }) => 
     <div className="product-list">
       <h2>Productos Disponibles</h2>
       <div className="products-grid">
-        {productos.map(producto => (
+        {productos.map((producto) => (
           <div key={producto.id} className="product-card">
-            <img 
-              src={producto.imagen} 
+            <img
+              src={producto.imagen}
               alt={producto.nombre}
               className="product-image"
             />
             <div className="product-info">
-              <h3>{producto.nombre}</h3>
+              <h3 className="product-name">{producto.nombre}</h3>
               <p className="product-description">{producto.descripcion}</p>
               <div className="product-details">
                 <span className="price">${producto.precio}</span>
                 <span className="stock">Stock: {producto.stock}</span>
               </div>
-              <button 
+              <button
                 onClick={() => handleAgregarAlCarrito(producto)}
                 disabled={producto.stock === 0}
-                className={`add-to-cart-btn ${producto.stock === 0 ? 'disabled' : ''}`}
+                className={`add-to-cart-btn ${
+                  producto.stock === 0 ? "disabled" : ""
+                }`}
               >
-                {producto.stock === 0 ? 'Sin Stock' : 'Agregar al Carrito'}
+                {producto.stock === 0 ? "Sin Stock" : "Agregar al Carrito"}
               </button>
             </div>
           </div>

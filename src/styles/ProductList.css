@@ -50,6 +50,7 @@
   margin: 0 0 8px 0;
   color: #333;
   font-size: 1.2em;
+  text-decoration: none !important;
 }
 
 .product-description {
@@ -99,7 +100,8 @@
   cursor: not-allowed;
 }
 
-.loading, .error {
+.loading,
+.error {
   text-align: center;
   padding: 40px;
   font-size: 1.2em;
@@ -124,16 +126,16 @@
   .product-list {
     padding: 15px;
   }
-  
+
   .products-grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 15px;
   }
-  
+
   .product-info {
     padding: 12px;
   }
-  
+
   .product-image {
     height: 150px;
   }

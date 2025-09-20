@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { productService } from "../services/productService";
 import "../styles/Product.css";
+import Cart from "./Cart";
 
 export const Product = () => {
   let { id } = useParams();
@@ -13,11 +14,12 @@ export const Product = () => {
   const [stock, setStock] = useState(0);
 
   useEffect(() => {
-    productService.getProductById(id)
+    productService
+      .getProductById(id)
       .then((foundProduct) => {
         setSelectedProduct(foundProduct);
         // Calculate available stock based on cart contents
-        const itemInCart = carrito.find(item => item.id === foundProduct.id);
+        const itemInCart = carrito.find((item) => item.id === foundProduct.id);
         const quantityInCart = itemInCart ? itemInCart.cantidad : 0;
         setStock(foundProduct.stock - quantityInCart);
       })
@@ -34,11 +36,14 @@ export const Product = () => {
   };
 
   const handleBackToCatalog = () => {
-    navigate('/catalog');
+    navigate("/catalog");
   };
 
   return (
-    <div>
+    <div
+      className="product-container"
+      style={{ display: "flex", gap: "2rem", padding: "1rem" }}
+    >
       {selectedProduct ? (
         <div>
           <h1>Producto: {selectedProduct.name}</h1>
@@ -50,13 +55,16 @@ export const Product = () => {
               <p>Stock: {stock}</p>
               <div className="buttons">
                 <button
-                  className="boton-detalle"
+                  className="boton-detalle add-to-cart-btn"
                   onClick={handleAddToCart}
                   disabled={stock === 0}
                 >
                   {stock === 0 ? "Sin stock" : "Agregar al carrito"}
                 </button>
-                <button className="boton-detalle" onClick={handleBackToCatalog}>
+                <button
+                  className="boton-detalle back-to-catalog"
+                  onClick={handleBackToCatalog}
+                >
                   Volver al catálogo
                 </button>
               </div>
@@ -65,6 +73,12 @@ export const Product = () => {
         </div>
       ) : (
         <p>Cargando...</p>
+      )}
+
+      {carrito.length > 0 && (
+        <div style={{ width: "350px", flexShrink: 0 }}>
+          <Cart />
+        </div>
       )}
     </div>
   );
