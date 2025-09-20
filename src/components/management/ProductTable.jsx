@@ -62,12 +62,20 @@ export const ProductTable = () => {
               Bienvenido/a, {user.firstName} {user.lastName}
             </p>
           )}
-        <button 
-          onClick={() => navigate('/product-form')}
-          className="btn-primary"
-        >
-          Agregar Nuevo Producto
-        </button>
+        <div className="header-buttons">
+          <button 
+            onClick={() => navigate('/catalog')}
+            className="btn-secondary"
+          >
+            ← Volver al Catálogo
+          </button>
+          <button 
+            onClick={() => navigate('/product-form')}
+            className="btn-primary"
+          >
+            Agregar Nuevo Producto
+          </button>
+        </div>
       </div>
 
       <table className="product-table">
