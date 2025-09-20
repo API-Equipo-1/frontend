@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { useMatch, useResolvedPath } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { useCart } from "../context/CartContext";
 
 export const Navbar = () => {
     const { user, logout } = useAuth();
+    const { cantidadTotalItems } = useCart();
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -16,24 +18,39 @@ export const Navbar = () => {
     if (user) {
         return (
             <nav className="nav">
-            <Link to="/catalog" className="site-title">WindCo</Link>
-            <ul>
-                <button onClick={handleLogout}>Cerrar Sesion</button>
-            </ul>
-        </nav>
+                <Link to="/catalog" className="site-title">WindCo</Link>
+                <ul>
+                    <Link to="/cart" className="cart-button">
+                        🛒 Ver Carrito
+                        {cantidadTotalItems > 0 && (
+                            <span className="cart-badge">
+                            {cantidadTotalItems}
+                            </span>
+                        )}
+                    </Link>
+                    <button onClick={handleLogout}>Cerrar Sesion</button>
+                </ul>
+            </nav>
         )
-
     }
     else {
-    return (
-        <nav className="nav">
-            <Link to="/catalog" className="site-title">WindCo</Link>
-            <ul>
-                <CustomLink to="/login">Login</CustomLink>
-                <CustomLink to="/register">Register</CustomLink>
-            </ul>
-        </nav>
-    );
+        return (
+            <nav className="nav">
+                <Link to="/catalog" className="site-title">WindCo</Link>
+                <ul>
+                    <Link to="/cart" className="cart-button">
+                        🛒 Ver Carrito
+                        {cantidadTotalItems > 0 && (
+                            <span className="cart-badge">
+                            {cantidadTotalItems}
+                            </span>
+                        )}
+                    </Link>
+                    <CustomLink to="/login">Login</CustomLink>
+                    <CustomLink to="/register">Register</CustomLink>
+                </ul>
+            </nav>
+        );
     }
 };
 

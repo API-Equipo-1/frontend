@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../hooks/useAuth';
 import { productService } from '../services/productService';
 import '../styles/Checkout.css';
 
 const Checkout = () => {
   const { carrito, vaciarCarrito, totalPrecio } = useCart();
+  const { user } = useAuth();
   const navigate = useNavigate();
   
   const [datosCliente, setDatosCliente] = useState({
@@ -71,6 +73,13 @@ const Checkout = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validar autenticación antes de procesar el pedido
+    if (!user) {
+      alert('Debes iniciar sesión para confirmar tu pedido');
+      navigate('/login');
+      return;
+    }
     
     if (!validarFormulario()) {
       return;
@@ -297,8 +306,19 @@ const Checkout = () => {
               className="submit-order-btn"
               disabled={procesandoPedido}
             >
-              {procesandoPedido ? 'Procesando...' : `Confirmar Pedido - $${totalPrecio.toFixed(2)}`}
+              {procesandoPedido 
+                ? 'Procesando...' 
+                : user 
+                  ? `Confirmar Pedido - $${totalPrecio.toFixed(2)}`
+                  : 'Iniciar Sesión para Confirmar Pedido'
+              }
             </button>
+            
+            {!user && (
+              <p className="auth-warning">
+                ⚠️ Necesitas iniciar sesión para confirmar tu pedido
+              </p>
+            )}
           </form>
         </div>
       </div>

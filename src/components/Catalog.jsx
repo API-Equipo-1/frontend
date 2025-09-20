@@ -70,40 +70,7 @@ export const Catalog = () => {
               Gestionar Mis Productos
             </button>
           )}
-          {user && (
-            <button 
-              onClick={() => navigate('/cart')}
-              style={{
-                marginLeft: '1rem',
-                padding: '0.5rem 1rem',
-                backgroundColor: '#2563eb',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                position: 'relative',
-                width: '20vw'
-              }}
-            >
-              🛒 Ver Carrito
-              {cantidadTotalItems > 0 && (
-                <span style={{
-                  position: 'absolute',
-                  top: '-8px',
-                  right: '-8px',
-                  backgroundColor: '#ef4444',
-                  color: 'white',
-                  borderRadius: '50%',
-                  padding: '2px 6px',
-                  fontSize: '0.75rem',
-                  minWidth: '20px',
-                  textAlign: 'center'
-                }}>
-                  {cantidadTotalItems}
-                </span>
-              )}
-            </button>
-          )}
+          
           {user && (
             <p style={{ 
               color: '#6b7280', 
