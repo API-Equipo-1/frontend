@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../hooks/useAuth';
 import { productService } from '../services/productService';
+import { validateCheckoutForm } from '../utils/validation';
 import '../styles/Checkout.css';
 
 const Checkout = () => {
@@ -40,34 +41,9 @@ const Checkout = () => {
   };
 
   const validarFormulario = () => {
-    const nuevosErrores = {};
-
-    if (!datosCliente.nombre.trim()) {
-      nuevosErrores.nombre = 'El nombre es requerido';
-    }
-    if (!datosCliente.apellido.trim()) {
-      nuevosErrores.apellido = 'El apellido es requerido';
-    }
-    if (!datosCliente.email.trim()) {
-      nuevosErrores.email = 'El email es requerido';
-    } else if (!/\S+@\S+\.\S+/.test(datosCliente.email)) {
-      nuevosErrores.email = 'El email no es válido';
-    }
-    if (!datosCliente.telefono.trim()) {
-      nuevosErrores.telefono = 'El teléfono es requerido';
-    }
-    if (!datosCliente.direccion.trim()) {
-      nuevosErrores.direccion = 'La dirección es requerida';
-    }
-    if (!datosCliente.ciudad.trim()) {
-      nuevosErrores.ciudad = 'La ciudad es requerida';
-    }
-    if (!datosCliente.codigoPostal.trim()) {
-      nuevosErrores.codigoPostal = 'El código postal es requerido';
-    }
-
-    setErrores(nuevosErrores);
-    return Object.keys(nuevosErrores).length === 0;
+    const validation = validateCheckoutForm(datosCliente);
+    setErrores(validation.errors);
+    return validation.isValid;
   };
 
   const handleSubmit = async (e) => {
