@@ -18,16 +18,12 @@ export const Navbar = () => {
     if (user) {
         return (
             <nav className="nav">
-                <Link to="/catalog" className="site-title">WindCo</Link>
+                <Link to="/catalog" className="site-title">
+                    <img src="/windco.png" alt="WindCo" className="logo" />
+                    <span className="brand-name">WindCo</span>
+                </Link>
                 <ul>
-                    <Link to="/cart" className="cart-button">
-                        🛒 Ver Carrito
-                        {cantidadTotalItems > 0 && (
-                            <span className="cart-badge">
-                            {cantidadTotalItems}
-                            </span>
-                        )}
-                    </Link>
+
                     <button onClick={handleLogout}>Cerrar Sesion</button>
                 </ul>
             </nav>
@@ -36,16 +32,12 @@ export const Navbar = () => {
     else {
         return (
             <nav className="nav">
-                <Link to="/catalog" className="site-title">WindCo</Link>
+                <Link to="/catalog" className="site-title">
+                    <img src="/windco.png" alt="WindCo" className="logo" />
+                    <span className="brand-name">WindCo</span>
+                </Link>
                 <ul>
-                    <Link to="/cart" className="cart-button">
-                        🛒 Ver Carrito
-                        {cantidadTotalItems > 0 && (
-                            <span className="cart-badge">
-                            {cantidadTotalItems}
-                            </span>
-                        )}
-                    </Link>
+                   
                     <CustomLink to="/login">Login</CustomLink>
                     <CustomLink to="/register">Register</CustomLink>
                 </ul>

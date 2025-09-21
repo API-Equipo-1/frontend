@@ -203,94 +203,101 @@ const Checkout = () => {
           <form onSubmit={handleSubmit}>
             <div className="form-row">
               <div className="form-group">
-                <label htmlFor="nombre">Nombre *</label>
+                <label htmlFor="nombre" className="form-label">Nombre *</label>
                 <input
                   type="text"
                   id="nombre"
                   name="nombre"
                   value={datosCliente.nombre}
                   onChange={handleInputChange}
-                  className={errores.nombre ? 'error' : ''}
+                  className={`form-input ${errores.nombre ? 'error' : ''}`}
+                  placeholder="Ej: Juan"
                 />
                 {errores.nombre && <span className="error-message">{errores.nombre}</span>}
               </div>
 
               <div className="form-group">
-                <label htmlFor="apellido">Apellido *</label>
+                <label htmlFor="apellido" className="form-label">Apellido *</label>
                 <input
                   type="text"
                   id="apellido"
                   name="apellido"
                   value={datosCliente.apellido}
                   onChange={handleInputChange}
-                  className={errores.apellido ? 'error' : ''}
+                  className={`form-input ${errores.apellido ? 'error' : ''}`}
+                  placeholder="Ej: Pérez"
                 />
                 {errores.apellido && <span className="error-message">{errores.apellido}</span>}
               </div>
             </div>
 
             <div className="form-group">
-              <label htmlFor="email">Email *</label>
+              <label htmlFor="email" className="form-label">Email *</label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 value={datosCliente.email}
                 onChange={handleInputChange}
-                className={errores.email ? 'error' : ''}
+                className={`form-input ${errores.email ? 'error' : ''}`}
+                placeholder="juan@ejemplo.com"
               />
               {errores.email && <span className="error-message">{errores.email}</span>}
             </div>
 
             <div className="form-group">
-              <label htmlFor="telefono">Teléfono *</label>
+              <label htmlFor="telefono" className="form-label">Teléfono *</label>
               <input
                 type="tel"
                 id="telefono"
                 name="telefono"
                 value={datosCliente.telefono}
                 onChange={handleInputChange}
-                className={errores.telefono ? 'error' : ''}
+                className={`form-input ${errores.telefono ? 'error' : ''}`}
+                placeholder="Ej: +54 11 1234-5678"
               />
               {errores.telefono && <span className="error-message">{errores.telefono}</span>}
             </div>
 
             <div className="form-group">
-              <label htmlFor="direccion">Dirección *</label>
+              <label htmlFor="direccion" className="form-label">Dirección *</label>
               <input
                 type="text"
                 id="direccion"
                 name="direccion"
                 value={datosCliente.direccion}
                 onChange={handleInputChange}
-                className={errores.direccion ? 'error' : ''}
+                className={`form-input ${errores.direccion ? 'error' : ''}`}
+                placeholder="Ej: Av. Corrientes 1234"
               />
               {errores.direccion && <span className="error-message">{errores.direccion}</span>}
             </div>
 
             <div className="form-row">
               <div className="form-group">
-                <label htmlFor="ciudad">Ciudad *</label>
+                <label htmlFor="ciudad" className="form-label">Ciudad *</label>
                 <input
                   type="text"
                   id="ciudad"
                   name="ciudad"
                   value={datosCliente.ciudad}
                   onChange={handleInputChange}
-                  className={errores.ciudad ? 'error' : ''}
+                  className={`form-input ${errores.ciudad ? 'error' : ''}`}
+                  placeholder="Ej: Buenos Aires"
                 />
                 {errores.ciudad && <span className="error-message">{errores.ciudad}</span>}
               </div>
 
               <div className="form-group">
-                <label htmlFor="codigoPostal">Código Postal *</label>
+                <label htmlFor="codigoPostal" className="form-label">Código Postal *</label>
                 <input
                   type="text"
                   id="codigoPostal"
                   name="codigoPostal"
                   value={datosCliente.codigoPostal}
                   onChange={handleInputChange}
-                  className={errores.codigoPostal ? 'error' : ''}
+                  className={`form-input ${errores.codigoPostal ? 'error' : ''}`}
+                  placeholder="Ej: 1234"
                 />
                 {errores.codigoPostal && <span className="error-message">{errores.codigoPostal}</span>}
               </div>
