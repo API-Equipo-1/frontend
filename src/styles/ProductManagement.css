@@ -7,6 +7,13 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
 .product-table {

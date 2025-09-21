@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../hooks/useAuth';
+import { productService } from '../services/productService';
 import '../styles/Checkout.css';
 
 const Checkout = () => {
   const { carrito, vaciarCarrito, totalPrecio } = useCart();
+  const { user } = useAuth();
   const navigate = useNavigate();
   
   const [datosCliente, setDatosCliente] = useState({
@@ -19,6 +22,7 @@ const Checkout = () => {
 
   const [errores, setErrores] = useState({});
   const [procesandoPedido, setProcesandoPedido] = useState(false);
+  const [stockErrors, setStockErrors] = useState([]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -70,13 +74,34 @@ const Checkout = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Validar autenticación antes de procesar el pedido
+    if (!user) {
+      alert('Debes iniciar sesión para confirmar tu pedido');
+      navigate('/login');
+      return;
+    }
+    
     if (!validarFormulario()) {
       return;
     }
 
     setProcesandoPedido(true);
+    setStockErrors([]);
 
     try {
+      // First, validate that all products have sufficient stock
+      const stockValidation = await productService.validateCartStock(carrito);
+      
+      if (!stockValidation.isValid) {
+        setStockErrors(stockValidation.invalidItems);
+        alert('Algunos productos no tienen suficiente stock disponible. Por favor revisa tu carrito.');
+        setProcesandoPedido(false);
+        return;
+      }
+
+      // If stock is valid, proceed to update the stock
+      await productService.updateMultipleProductsStock(carrito);
+
       // Simulate order processing
       await new Promise(resolve => setTimeout(resolve, 2000));
 
@@ -99,7 +124,13 @@ const Checkout = () => {
       navigate('/catalog');
     } catch (error) {
       console.error('Error al procesar pedido:', error);
-      alert('Hubo un error al procesar tu pedido. Por favor intenta nuevamente.');
+      if (error.message.includes('Insufficient stock')) {
+        alert(`Error de stock: ${error.message}`);
+      } else if (error.message.includes('Stock update failed')) {
+        alert('Error al actualizar el inventario. Por favor intenta nuevamente.');
+      } else {
+        alert('Hubo un error al procesar tu pedido. Por favor intenta nuevamente.');
+      }
     } finally {
       setProcesandoPedido(false);
     }
@@ -133,6 +164,24 @@ const Checkout = () => {
       </div>
 
       <div className="checkout-content">
+        {/* Stock errors display */}
+        {stockErrors.length > 0 && (
+          <div className="stock-errors">
+            <h3>⚠️ Problemas de Stock</h3>
+            {stockErrors.map(error => (
+              <div key={error.productId} className="stock-error-item">
+                <span className="error-product">{error.productName}</span>
+                <span className="error-details">
+                  Solicitado: {error.requestedQuantity} | Disponible: {error.availableStock}
+                </span>
+              </div>
+            ))}
+            <p className="stock-error-message">
+              Por favor ajusta las cantidades en tu carrito antes de continuar.
+            </p>
+          </div>
+        )}
+
         {/* Order summary */}
         <div className="order-summary">
           <h3>Resumen del Pedido</h3>
@@ -257,8 +306,19 @@ const Checkout = () => {
               className="submit-order-btn"
               disabled={procesandoPedido}
             >
-              {procesandoPedido ? 'Procesando...' : `Confirmar Pedido - $${totalPrecio.toFixed(2)}`}
+              {procesandoPedido 
+                ? 'Procesando...' 
+                : user 
+                  ? `Confirmar Pedido - $${totalPrecio.toFixed(2)}`
+                  : 'Iniciar Sesión para Confirmar Pedido'
+              }
             </button>
+            
+            {!user && (
+              <p className="auth-warning">
+                ⚠️ Necesitas iniciar sesión para confirmar tu pedido
+              </p>
+            )}
           </form>
         </div>
       </div>
