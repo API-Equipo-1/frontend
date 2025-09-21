@@ -39,6 +39,16 @@
       "registeredAt": "2025-09-13T15:13:43.167Z",
       "isActive": true,
       "password": "superMax33"
+    },
+    {
+      "id": null,
+      "username": "ejemplo",
+      "email": "ejemplo@gmail.com",
+      "firstName": "ejemplo",
+      "lastName": "ejemplo",
+      "registeredAt": "2025-09-20T18:01:51.784Z",
+      "isActive": true,
+      "password": "A12345678a"
     }
   ],
   "products": [

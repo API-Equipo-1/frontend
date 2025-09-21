@@ -4,6 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useCart } from "../context/CartContext";
 import { productService } from "../services/productService";
 import "../styles/Catalog.css";
+import "../styles/Cart.css";
 import { ProductCard } from "./ProductCard";
 import Cart from "./Cart";
 
@@ -12,19 +13,21 @@ export const Catalog = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { user, logout } = useAuth();
-  const { setProductosOriginalesFromAPI, carrito, cantidadTotalItems } = useCart();
+  const { setProductosOriginalesFromAPI, carrito, cantidadTotalItems } =
+    useCart();
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
   useEffect(() => {
     console.log("Fetching products...");
     setLoading(true);
-    
-    productService.getAllProducts()
+
+    productService
+      .getAllProducts()
       .then((data) => {
         console.log("Products loaded:", data);
         setProducts(data.sort((a, b) => a.name.localeCompare(b.name)));
@@ -85,18 +88,21 @@ export const Catalog = () => {
       <div className="catalog-content" style={{ display: 'flex', gap: '2rem' }}>
         <div className="product-list" style={{ flex: 1 }}>
           {loading && <p>Cargando productos...</p>}
-          {error && <p style={{color: 'red'}}>Error: {error}</p>}
+          {error && <p style={{ color: "red" }}>Error: {error}</p>}
           {!loading && !error && products.length === 0 && (
             <p>No se encontraron productos.</p>
           )}
-          {!loading && !error && products.length > 0 && products.map((product) => (
-            <ProductCard key={product.id} {...product} />
-          ))}
+          {!loading &&
+            !error &&
+            products.length > 0 &&
+            products.map((product) => (
+              <ProductCard key={product.id} {...product} />
+            ))}
         </div>
-        
+
         {/* Cart sidebar - only show if there are items in cart */}
         {carrito.length > 0 && (
-          <div style={{ width: '350px', flexShrink: 0 }}>
+          <div style={{ width: "350px", flexShrink: 0 }}>
             <Cart />
           </div>
         )}

@@ -10,10 +10,10 @@ export const Navbar = () => {
     const { cantidadTotalItems } = useCart();
     const navigate = useNavigate();
 
-    const handleLogout = () => {
-        logout();
-        navigate('/login');
-    };
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
     if (user) {
         return (
@@ -54,13 +54,13 @@ export const Navbar = () => {
     }
 };
 
-function CustomLink({to, children}) {
-    const resolvedPath = useResolvedPath(to);
-    const isActive = useMatch({path : resolvedPath.pathname, end: true});
+function CustomLink({ to, children }) {
+  const resolvedPath = useResolvedPath(to);
+  const isActive = useMatch({ path: resolvedPath.pathname, end: true });
 
-    return (
-        <li className={isActive ? "active" : "" }>
-            <Link to={to}>{children}</Link>
-        </li> 
-    )
+  return (
+    <li className={isActive ? "active" : ""}>
+      <Link to={to}>{children}</Link>
+    </li>
+  );
 }
