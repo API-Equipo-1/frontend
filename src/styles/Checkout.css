@@ -22,17 +22,26 @@
 
 .volver-btn {
   padding: 10px 20px;
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  background-color: #ffffff;
+  color: #374151;
+  border: 1px solid #374151;
+  border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease-in-out;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  width: auto;
+  max-width: 200px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .volver-btn:hover {
-  background-color: #5a6268;
+  background-color: #374151;
+  color: #ffffff;
+  border-color: #374151;
+  transform: translateY(-1px);
 }
 
 .checkout-empty {
@@ -252,9 +261,11 @@
 }
 
 .submit-order-btn:disabled {
-  background-color: #6c757d;
+  background-color: #e5e7eb;
+  color: #9ca3af;
   cursor: not-allowed;
   transform: none;
+  border: 1px solid #d1d5db;
 }
 
 .auth-warning {

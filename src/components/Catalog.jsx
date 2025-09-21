@@ -53,6 +53,13 @@ export const Catalog = () => {
           <h1 style={{ margin: 0 }}>Catálogo de productos</h1>
           {user && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+               <p style={{ 
+                color: '#6b7280', 
+                fontSize: '0.875rem',
+                margin: 0
+              }}>
+                Bienvenido/a, {user.firstName} {user.lastName}
+              </p>
               <button 
                 onClick={() => navigate('/product-management')}
                 style={{
@@ -66,13 +73,7 @@ export const Catalog = () => {
               >
                 Gestionar Mis Productos
               </button>
-              <p style={{ 
-                color: '#6b7280', 
-                fontSize: '0.875rem',
-                margin: 0
-              }}>
-                Bienvenido/a, {user.firstName} {user.lastName}
-              </p>
+             
             </div>
           )}
         </div>

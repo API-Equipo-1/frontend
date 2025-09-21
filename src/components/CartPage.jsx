@@ -39,7 +39,7 @@ const CartPage = () => {
         </button>
       </header>
 
-      {/* Cart Content */}
+      {/* Contenido del Carrito */}
       <div
         style={{
           maxWidth: "800px",

@@ -64,7 +64,10 @@ const AppRoutes = () => {
         path="/product-management" 
         element={
           <ProtectedRoute>
-            <ProductTable />
+            <>
+              <Navbar/>
+              <ProductTable />
+            </>
           </ProtectedRoute>
         } 
       />
@@ -72,7 +75,10 @@ const AppRoutes = () => {
         path="/product-form" 
         element={
           <ProtectedRoute>
-            <ProductForm />
+            <>
+              <Navbar/>
+              <ProductForm />
+            </>
           </ProtectedRoute>
         } 
       />
@@ -80,7 +86,10 @@ const AppRoutes = () => {
         path="/product-stats/:productId" 
         element={
           <ProtectedRoute>
-            <ProductStats />
+            <>
+              <Navbar/>
+              <ProductStats />
+            </>
           </ProtectedRoute>
         } 
       />
