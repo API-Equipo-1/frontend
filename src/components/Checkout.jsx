@@ -31,7 +31,6 @@ const Checkout = () => {
       [name]: value
     }));
 
-    // Clear error for field when user starts typing
     if (errores[name]) {
       setErrores(prev => ({
         ...prev,
@@ -74,10 +73,9 @@ const Checkout = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validar autenticación antes de procesar el pedido
     if (!user) {
       alert('Debes iniciar sesión para confirmar tu pedido');
-      navigate('/login');
+      navigate('/login?redirect=/checkout');
       return;
     }
     
@@ -89,7 +87,7 @@ const Checkout = () => {
     setStockErrors([]);
 
     try {
-      // First, validate that all products have sufficient stock
+      // validar stock
       const stockValidation = await productService.validateCartStock(carrito);
       
       if (!stockValidation.isValid) {
@@ -99,10 +97,8 @@ const Checkout = () => {
         return;
       }
 
-      // If stock is valid, proceed to update the stock
+      // si hay stock, actualizar stock en el inventario
       await productService.updateMultipleProductsStock(carrito);
-
-      // Simulate order processing
       await new Promise(resolve => setTimeout(resolve, 2000));
 
       const pedido = {
@@ -114,12 +110,11 @@ const Checkout = () => {
         estado: 'confirmado'
       };
 
-      // Simulate saving the order
+      // simular guardar el pedido 
       console.log('Pedido procesado:', pedido);
       
       alert(`¡Pedido confirmado! \nTotal: $${totalPrecio.toFixed(2)} \nNúmero de pedido: ${pedido.id}`);
       
-      // Clear cart and redirect to catalog
       vaciarCarrito();
       navigate('/catalog');
     } catch (error) {
@@ -182,7 +177,7 @@ const Checkout = () => {
           </div>
         )}
 
-        {/* Order summary */}
+        {/* Resumen del Pedido */}
         <div className="order-summary">
           <h3>Resumen del Pedido</h3>
           <div className="order-items">
@@ -202,7 +197,7 @@ const Checkout = () => {
           </div>
         </div>
 
-        {/* Customer form */}
+        {/* formulario de envio*/}
         <div className="customer-form">
           <h3>Datos de Envío</h3>
           <form onSubmit={handleSubmit}>

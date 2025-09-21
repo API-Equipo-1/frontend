@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { userService } from '../services/userService';
 import { useAuth } from '../hooks/useAuth';
 import '../styles/Register.css';
@@ -14,18 +14,21 @@ const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [searchParams] = useSearchParams();
+  
+  const redirectTo = searchParams.get('redirect') || '/catalog';
 
   const validateForm = () => {
     const newErrors = {};
 
-    // Email validation
+    // validacion de email
     if (!formData.email.trim()) {
       newErrors.email = 'El email es requerido';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Ingresa un email válido';
     }
 
-    // Password validation
+    // validacion de contraseña
     if (!formData.password.trim()) {
       newErrors.password = 'La contraseña es requerida';
     }
@@ -41,7 +44,7 @@ const Login = () => {
       [name]: value
     }));
 
-    // Clear error when user starts typing
+    // Limpiar error cuando el usuario comienza a escribir
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -60,15 +63,13 @@ const Login = () => {
     setIsSubmitting(true);
 
     try {
-      // Attempt login using userService
+      // Intentar iniciar sesión usando userService
       const loginResult = await userService.loginUser(formData.email, formData.password);
 
       if (loginResult.success) {
-        // Store user data in auth context
+        // Almacenar datos del usuario en el contexto de autenticación
         login(loginResult.user);
-        
-        // Navigate to catalog
-        navigate('/catalog');
+        navigate(redirectTo);
         
       } else {
         setErrors({ 
@@ -90,7 +91,26 @@ const Login = () => {
     <div className="register-container">
       <div className="register-card">
         <h1 className="register-title">Iniciar Sesión</h1>
-        <p className="register-subtitle">Accede a tu cuenta</p>
+        <p className="register-subtitle">
+          {redirectTo === '/checkout' 
+            ? 'Para finalizar tu compra, necesitas iniciar sesión' 
+            : 'Accede a tu cuenta'
+          }
+        </p>
+        
+        {redirectTo === '/checkout' && (
+          <div className="checkout-info" style={{
+            backgroundColor: '#e3f2fd',
+            padding: '0.75rem',
+            borderRadius: '4px',
+            marginBottom: '1rem',
+            border: '1px solid #bbdefb'
+          }}>
+            <p style={{ margin: 0, fontSize: '0.9rem', color: '#1565c0' }}>
+              🛒 Tu carrito se mantendrá guardado mientras inicias sesión
+            </p>
+          </div>
+        )}
         
         <form onSubmit={handleSubmit} className="register-form">
           {errors.general && (
@@ -141,7 +161,7 @@ const Login = () => {
         </form>
 
         <p className="login-link">
-          ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
+          ¿No tienes cuenta? <Link to={`/register${redirectTo !== '/catalog' ? `?redirect=${encodeURIComponent(redirectTo)}` : ''}`}>Regístrate</Link>
         </p>
       </div>
     </div>

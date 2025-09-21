@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { User } from '../models/User';
 import { userService } from '../services/userService';
 import '../styles/Register.css';
@@ -16,17 +16,18 @@ const Register = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  
+  const redirectTo = searchParams.get('redirect') || '/catalog';
 
   const validateForm = async () => {
-    // First, validate the form data using the User class
+    // validar datos de clase usuario
     const validation = User.validate(formData);
     
     if (!validation.isValid) {
       setErrors(validation.errors);
       return false;
     }
-
-    // Then check for duplicates via API
     try {
       const apiValidation = await userService.validateRegistration(formData);
       if (!apiValidation.isValid) {
@@ -49,7 +50,6 @@ const Register = () => {
       [name]: value
     }));
 
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -68,16 +68,14 @@ const Register = () => {
     setIsSubmitting(true);
 
     try {
-      // Create User instance from form data
       const newUser = User.fromFormData(formData);
       
-      // Save to JSON Server
       await userService.createUser(newUser.toJSON());
 
       alert('¡Registro exitoso! Usuario creado correctamente.');
       
-      // Navigate to login page
-      navigate('/login');
+      const loginUrl = redirectTo !== '/catalog' ? `/login?redirect=${encodeURIComponent(redirectTo)}` : '/login';
+      navigate(loginUrl);
 
     } catch (error) {
       console.error('Error al registrar usuario:', error);
@@ -93,7 +91,26 @@ const Register = () => {
     <div className="register-container">
       <div className="register-card">
         <h1 className="register-title">Crear Cuenta</h1>
-        <p className="register-subtitle">Únete a nuestra tienda</p>
+        <p className="register-subtitle">
+          {redirectTo === '/checkout' 
+            ? 'Crea tu cuenta para finalizar la compra' 
+            : 'Únete a nuestra tienda'
+          }
+        </p>
+        
+        {redirectTo === '/checkout' && (
+          <div className="checkout-info" style={{
+            backgroundColor: '#e8f5e8',
+            padding: '0.75rem',
+            borderRadius: '4px',
+            marginBottom: '1rem',
+            border: '1px solid #c8e6c9'
+          }}>
+            <p style={{ margin: 0, fontSize: '0.9rem', color: '#2e7d32' }}>
+              🛒 Tu carrito se mantendrá guardado mientras creas tu cuenta
+            </p>
+          </div>
+        )}
         
         <form onSubmit={handleSubmit} className="register-form">
           {errors.general && (
@@ -194,7 +211,7 @@ const Register = () => {
         </form>
 
         <p className="login-link">
-          ¿Ya tienes cuenta? <Link to="/login">Inicia Sesión</Link>
+          ¿Ya tienes cuenta? <Link to={`/login${redirectTo !== '/catalog' ? `?redirect=${encodeURIComponent(redirectTo)}` : ''}`}>Inicia Sesión</Link>
         </p>
       </div>
     </div>

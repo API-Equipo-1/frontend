@@ -67,7 +67,7 @@
       "id": "2",
       "name": "Zapatillas Nike Air Max 270",
       "description": "Zapatillas deportivas con tecnología Air Max para máximo confort.",
-      "price": 45999.50,
+      "price": 45999.5,
       "stock": 40,
       "category": "Calzado",
       "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&q=80",
@@ -76,7 +76,6 @@
     },
     {
       "id": "3",
-
       "name": "Apple Watch Series 9",
       "description": "Smartwatch con GPS, monitor de salud y pantalla Always-On.",
       "price": 129999,
@@ -147,7 +146,7 @@
       "description": "Modelo a escala 1:18 del monoplaza campeón mundial 2023",
       "category": "Coleccionables",
       "price": 15999,
-      "stock": 5,
+      "stock": 3,
       "image": "https://hips.hearstapps.com/hmg-prod/images/max-rb18-1645609871.jpg",
       "extendedDescription": "Réplica oficial del Red Bull RB19 con el que Max Verstappen ganó el campeonato mundial 2023. Modelo die-cast a escala 1:18 con detalles auténticos, alerones móviles y acabados metálicos. Incluye base de exhibición y certificado de autenticidad. Perfecto para coleccionistas de F1.",
       "createdBy": "4"

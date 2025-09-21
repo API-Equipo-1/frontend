@@ -12,15 +12,9 @@ export const Catalog = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { user, logout } = useAuth();
-  const { setProductosOriginalesFromAPI, carrito, cantidadTotalItems } =
-    useCart();
+  const { user } = useAuth();
+  const { setProductosOriginalesFromAPI, carrito } = useCart();
   const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
 
   useEffect(() => {
     console.log("Fetching products...");
@@ -44,43 +38,42 @@ export const Catalog = () => {
 
   return (
     <div>
-      {/* Header with user info and logout */}
       <header style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
         padding: '1rem 2rem',
         backgroundColor: '#f8f9fa',
         borderBottom: '1px solid #e5e7eb',
         marginBottom: '2rem'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}> 
-          <h1 style={{ margin: 0 }}>Cátalogo de productos</h1>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'space-between',
+          width: '100%' 
+        }}> 
+          <h1 style={{ margin: 0 }}>Catálogo de productos</h1>
           {user && (
-            <button 
-              onClick={() => navigate('/product-management')}
-              style={{
-                marginLeft: '1rem',
-                padding: '0.5rem 1rem',
-                backgroundColor: '#4CAF50',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                width: '20vw'
-              }}
-            >
-              Gestionar Mis Productos
-            </button>
-          )}
-          
-          {user && (
-            <p style={{ 
-              color: '#6b7280', 
-              fontSize: '0.875rem' 
-            }}>
-              Bienvenido/a, {user.firstName} {user.lastName}
-            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <button 
+                onClick={() => navigate('/product-management')}
+                style={{
+                  padding: '0.5rem 1rem',
+                  backgroundColor: '#4CAF50',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }}
+              >
+                Gestionar Mis Productos
+              </button>
+              <p style={{ 
+                color: '#6b7280', 
+                fontSize: '0.875rem',
+                margin: 0
+              }}>
+                Bienvenido/a, {user.firstName} {user.lastName}
+              </p>
+            </div>
           )}
         </div>
       </header>
@@ -99,8 +92,6 @@ export const Catalog = () => {
               <ProductCard key={product.id} {...product} />
             ))}
         </div>
-
-        {/* Cart sidebar - only show if there are items in cart */}
         {carrito.length > 0 && (
           <div style={{ width: "350px", flexShrink: 0 }}>
             <Cart />
