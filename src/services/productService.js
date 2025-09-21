@@ -162,9 +162,76 @@ export const productService = {
     }
   },
 
-  // This is just for simulation purposes
-  updateProductStock(productId, newStock) {
-    console.log(`Updating stock for product ${productId} to ${newStock}`);
-    return Promise.resolve({ success: true });
+  async updateProductStock(productId, newStock) {
+    try {
+      const product = await this.getProductById(productId);
+      const updatedProduct = { ...product, stock: newStock };
+      return await api.put(`/products/${Number(productId)}`, updatedProduct);
+    } catch (error) {
+      console.error('Error updating product stock:', error);
+      throw error;
+    }
+  },
+
+  async decrementProductStock(productId, quantity) {
+    try {
+      const product = await this.getProductById(productId);
+      if (product.stock < quantity) {
+        throw new Error(`Insufficient stock for product ${product.name}. Available: ${product.stock}, Requested: ${quantity}`);
+      }
+      const newStock = product.stock - quantity;
+      return await this.updateProductStock(productId, newStock);
+    } catch (error) {
+      console.error('Error decrementing product stock:', error);
+      throw error;
+    }
+  },
+
+  async updateMultipleProductsStock(cartItems) {
+    try {
+      const updatePromises = cartItems.map(item => 
+        this.decrementProductStock(item.id, item.cantidad)
+      );
+      
+      const results = await Promise.allSettled(updatePromises);
+      
+      // Check if any updates failed
+      const failures = results.filter(result => result.status === 'rejected');
+      if (failures.length > 0) {
+        throw new Error(`Stock update failed for ${failures.length} products`);
+      }
+      
+      return { success: true, updated: results.length };
+    } catch (error) {
+      console.error('Error updating multiple products stock:', error);
+      throw error;
+    }
+  },
+
+  async validateCartStock(cartItems) {
+    try {
+      const validationPromises = cartItems.map(async (item) => {
+        const product = await this.getProductById(item.id);
+        return {
+          productId: item.id,
+          productName: product.name,
+          requestedQuantity: item.cantidad,
+          availableStock: product.stock,
+          isValid: product.stock >= item.cantidad
+        };
+      });
+      
+      const validations = await Promise.all(validationPromises);
+      const invalidItems = validations.filter(v => !v.isValid);
+      
+      return {
+        isValid: invalidItems.length === 0,
+        invalidItems,
+        validations
+      };
+    } catch (error) {
+      console.error('Error validating cart stock:', error);
+      throw error;
+    }
   }
 };

@@ -14,51 +14,79 @@ import { Navbar } from "../components/Navbar.jsx";
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
+      {/* Ruta principal redirige al catálogo */}
+      <Route path="/" element={<Navigate to="/catalog" replace />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       
+      {/* Rutas públicas - accesibles sin autenticación */}
       <Route 
         path="/catalog" 
         element={
-          <ProtectedRoute>
+          <>
             <Navbar/>
             <Catalog />
-          </ProtectedRoute>
+          </>
         } 
       />
       <Route 
         path="/product/:id" 
         element={
-          <ProtectedRoute>
+          <>
             <Navbar/>
             <Product />
-          </ProtectedRoute>
+          </>
         } 
       />
       <Route 
         path="/cart" 
         element={
-          <ProtectedRoute>
+          <>
             <Navbar/>
             <CartPage />
+          </>
+        } 
+      />
+      
+      {/* Ruta de checkout - accesible sin autenticación, pero validación interna para confirmar pedido */}
+      <Route 
+        path="/checkout" 
+        element={
+          <>
+            <Navbar/>
+            <Checkout />
+          </>
+        } 
+      />
+      
+      {/* Rutas de gestión de productos - requieren autenticación */}
+      <Route 
+        path="/product-management" 
+        element={
+          <ProtectedRoute>
+            <ProductTable />
           </ProtectedRoute>
         } 
       />
       <Route 
-        path="/checkout" 
+        path="/product-form" 
         element={
           <ProtectedRoute>
-            <Navbar/>
-            <Checkout />
+            <ProductForm />
           </ProtectedRoute>
         } 
       />
-      <Route path="/product-management" element={<ProductTable />} />
-      <Route path="/product-form" element={<ProductForm />} />
-      <Route path="/product-stats/:productId" element={<ProductStats />} />
+      <Route 
+        path="/product-stats/:productId" 
+        element={
+          <ProtectedRoute>
+            <ProductStats />
+          </ProtectedRoute>
+        } 
+      />
           
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      {/* Ruta catch-all - redirige al catálogo si no se encuentra la página */}
+      <Route path="*" element={<Navigate to="/catalog" replace />} />
     </Routes>
   );
 };

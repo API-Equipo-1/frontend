@@ -44,10 +44,48 @@ export const Catalog = () => {
 
   return (
     <div>
-      <div
-        className="catalog-content"
-        style={{ display: "flex", gap: "2rem", padding: "1rem" }}
-      >
+      {/* Header with user info and logout */}
+      <header style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '1rem 2rem',
+        backgroundColor: '#f8f9fa',
+        borderBottom: '1px solid #e5e7eb',
+        marginBottom: '2rem'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}> 
+          <h1 style={{ margin: 0 }}>Cátalogo de productos</h1>
+          {user && (
+            <button 
+              onClick={() => navigate('/product-management')}
+              style={{
+                marginLeft: '1rem',
+                padding: '0.5rem 1rem',
+                backgroundColor: '#4CAF50',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                width: '20vw'
+              }}
+            >
+              Gestionar Mis Productos
+            </button>
+          )}
+          
+          {user && (
+            <p style={{ 
+              color: '#6b7280', 
+              fontSize: '0.875rem' 
+            }}>
+              Bienvenido/a, {user.firstName} {user.lastName}
+            </p>
+          )}
+        </div>
+      </header>
+
+      <div className="catalog-content" style={{ display: 'flex', gap: '2rem' }}>
         <div className="product-list" style={{ flex: 1 }}>
           {loading && <p>Cargando productos...</p>}
           {error && <p style={{ color: "red" }}>Error: {error}</p>}
