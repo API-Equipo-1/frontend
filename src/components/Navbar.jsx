@@ -12,7 +12,7 @@ export const Navbar = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/catalog");
   };
 
     if (user) {
