@@ -19,15 +19,45 @@ export const Navbar = () => {
         return (
             <nav className="nav">
                 <Link to="/catalog" className="site-title">
-                    <img src="/windco.png" alt="WindCo" className="logo" />
-                    <span className="brand-name">WindCo</span>
+                    WindCo
                 </Link>
-                <ul>
-
-                    <button onClick={handleLogout}>Cerrar Sesion</button>
-                </ul>
+                <div className="user-controls">
+                    <div
+                        className="user-dropdown-container"
+                        onMouseEnter={() => {
+                            const menu = document.getElementById("user-dropdown-menu");
+                            if (menu) menu.style.display = "block";
+                        }}
+                        onMouseLeave={() => {
+                            const menu = document.getElementById("user-dropdown-menu");
+                            if (menu) menu.style.display = "none";
+                        }}
+                    >
+                        <button className="user-dropdown-button">
+                            Bienvenido/a, {user.firstName} ▼
+                        </button>
+                        <div id="user-dropdown-menu" className="user-dropdown-menu">
+                            <button
+                                className="dropdown-menu-item"
+                                onClick={() => {
+                                    navigate("/product-management");
+                                    document.getElementById("user-dropdown-menu").style.display =
+                                        "none";
+                                }}
+                            >
+                                Gestionar Mis Productos
+                            </button>
+                            <button
+                                className="dropdown-menu-item logout"
+                                onClick={handleLogout}
+                            >
+                                Cerrar Sesión
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </nav>
-        )
+        );
     }
     else {
         return (
