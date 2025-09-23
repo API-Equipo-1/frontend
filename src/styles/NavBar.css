@@ -197,22 +197,23 @@ button {
 
 .dropdown-menu-item {
     width: 100%;
-    background: none;
+    background: #ffffff !important;
     border: none;
     padding: 0.8rem 1rem;
     text-align: left;
     font-size: 1rem;
-    color: #222;
+    color: #2c3e50 !important;
     cursor: pointer;
     transition: background 0.2s;
     font-family: 'Montserrat', sans-serif;
 }
 
 .dropdown-menu-item:hover {
-    background-color: #e0e7ff;
+    background-color: #f8f9fa !important;
+    color: #2c3e50 !important;
 }
 
 .dropdown-menu-item.logout:hover {
-    background-color: #fee2e2;
-    color: #dc2626;
+    background-color: #f8f9fa !important;
+    color: #dc2626 !important;
 }

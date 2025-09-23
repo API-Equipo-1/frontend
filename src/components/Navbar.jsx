@@ -19,7 +19,8 @@ export const Navbar = () => {
         return (
             <nav className="nav">
                 <Link to="/catalog" className="site-title">
-                    WindCo
+                    <img src="/windco.png" alt="WindCo" className="logo" />
+                    <span className="brand-name">WindCo</span>
                 </Link>
                 <div className="user-controls">
                     <div
