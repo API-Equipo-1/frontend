@@ -1,0 +1,178 @@
+.product-list {
+  padding: 20px;
+  padding-right: 20px; /* Ya no necesitamos margen derecho para el carrito */
+}
+
+.product-list h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: none;
+}
+
+.product-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 380px; /* Minimum height to ensure content fits */
+}
+
+.product-card a {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+.product-card a:visited {
+  color: inherit !important;
+}
+
+.product-card a:hover {
+  color: inherit !important;
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.product-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.product-info h3 {
+  margin: 0 0 8px 0;
+  color: #333 !important;
+  font-size: 1.2em;
+  text-decoration: none !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+}
+
+.product-name {
+  color: #333 !important;
+  text-decoration: none !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+}
+
+.product-description {
+  color: #666;
+  font-size: 0.8em;
+  margin-bottom: 10px;
+  line-height: 1.3;
+  max-height: 3.2em; /* Allow for about 2.5 lines */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.product-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  margin-top: auto; /* Push to bottom of available space */
+  padding-top: 10px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.price {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #e74c3c;
+}
+
+.stock {
+  color: #2c3e50;
+  font-size: 0.9em;
+  font-weight: 600;
+  background-color: #ecf0f1;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.add-to-cart-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s;
+  margin-top: auto;
+}
+
+.add-to-cart-btn:hover:not(.disabled) {
+  background-color: #2980b9;
+}
+
+.add-to-cart-btn.disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2em;
+}
+
+.loading {
+  color: #3498db;
+}
+
+.error {
+  color: #e74c3c;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .product-list {
+    padding: 15px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
+  .product-info {
+    padding: 12px;
+  }
+
+  .product-image {
+    height: 150px;
+  }
+}

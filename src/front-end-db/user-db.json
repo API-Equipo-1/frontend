@@ -1,0 +1,54 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "demo_user",
+      "email": "demo@example.com",
+      "password": "Password123",
+      "firstName": "Usuario",
+      "lastName": "Demo",
+      "registeredAt": "2025-09-13T10:00:00.000Z",
+      "isActive": true
+    },
+    {
+      "id": "2",
+      "username": "Messi10",
+      "email": "messi@gmail.com",
+      "firstName": "Lionel",
+      "lastName": "Messi",
+      "registeredAt": "2025-09-13T13:17:56.687Z",
+      "isActive": true,
+      "password": "LioMessi22"
+    },
+    {
+      "id": "3",
+      "username": "papaHet",
+      "email": "jhetfield@gmail.com",
+      "firstName": "James",
+      "lastName": "Hetfield",
+      "registeredAt": "2025-09-13T13:39:44.198Z",
+      "isActive": true,
+      "password": "papaHet81"
+    },
+    {
+      "id": null,
+      "username": "SuperMax",
+      "email": "maxver@redbull.com",
+      "firstName": "Max",
+      "lastName": "Verstappen",
+      "registeredAt": "2025-09-13T15:13:43.167Z",
+      "isActive": true,
+      "password": "superMax33"
+    },
+    {
+      "id": null,
+      "username": "batman",
+      "email": "batman@gmail.com",
+      "firstName": "Bruce",
+      "lastName": "Wayne",
+      "registeredAt": "2025-09-13T15:56:21.316Z",
+      "isActive": true,
+      "password": "Batman11"
+    }
+  ]
+}
