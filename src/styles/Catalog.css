@@ -1,3 +1,89 @@
+/* Controles de búsqueda y filtrado */
+.catalog-filters {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  flex-wrap: wrap;
+}
+
+.search-container {
+  flex: 1;
+  min-width: 250px;
+  max-width: 400px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.filter-container {
+  min-width: 200px;
+}
+
+.category-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: white;
+  cursor: pointer;
+  transition: border-color 0.3s;
+  margin-left: 50px;
+}
+
+.category-select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.clear-filters-btn {
+  padding: 12px 20px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+
+.clear-filters-btn:hover {
+  background-color: #5a6268;
+}
+
+.search-results-info {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #e9ecef;
+  border-radius: 5px;
+}
+
+.search-results-info p {
+  margin: 0;
+  color: #495057;
+  font-weight: 500;
+}
+
 .product-list {
   display: flex;
   flex-wrap: wrap;
@@ -121,4 +207,35 @@ button:hover:not(:disabled) {
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Responsive design para filtros */
+@media (max-width: 768px) {
+  .catalog-filters {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-container,
+  .filter-container {
+    width: 100%;
+    min-width: unset;
+    max-width: unset;
+  }
+
+  .clear-filters-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .catalog-filters {
+    padding: 15px;
+  }
+
+  .search-input,
+  .category-select {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
 }
