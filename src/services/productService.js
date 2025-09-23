@@ -77,7 +77,7 @@ export const productService = {
   async getProductById(id) {
     try {
       const products = await this.getAllProducts();
-      const product = products.find(p => p.id == id);
+      const product = products.find(p => String(p.id) === String(id));
       if (!product) {
         throw new Error(`Product with id ${id} not found`);
       }
@@ -133,10 +133,9 @@ export const productService = {
 
   async createProduct(newProduct) {
     try {
-      const products = await this.getAllProducts();
-      const newId = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
-      const productToAdd = { id: newId, ...newProduct };
-      return await api.post('/products', productToAdd);
+      // Don't manually assign ID - let JSON Server handle it
+      // JSON Server will automatically assign the next available ID
+      return await api.post('/products', newProduct);
     } catch (error) {
       console.error('Error creating product:', error);
       throw error;
@@ -144,18 +143,25 @@ export const productService = {
   },
 
   async deleteProduct(id) {
-    return await api.delete(`/products/${id}`);
+    try {
+      // Ensure we're using the ID as-is, whether it's string or number
+      const response = await api.delete(`/products/${id}`);
+      return response;
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      throw error;
+    }
   },
 
   async updateProduct(id, updatedFields) {
     try {
       const products = await this.getAllProducts();
-      const productIndex = products.findIndex(p => p.id == id);
+      const productIndex = products.findIndex(p => String(p.id) === String(id));
       if (productIndex === -1) {
         throw new Error(`Product with id ${id} not found`);
       }
       const updatedProduct = { ...products[productIndex], ...updatedFields };
-      return await api.put(`/products/${Number(id)}`, updatedProduct);
+      return await api.put(`/products/${id}`, updatedProduct);
     } catch (error) {
       console.error('Error updating product:', error);
       throw error;
@@ -166,7 +172,7 @@ export const productService = {
     try {
       const product = await this.getProductById(productId);
       const updatedProduct = { ...product, stock: newStock };
-      return await api.put(`/products/${Number(productId)}`, updatedProduct);
+      return await api.put(`/products/${productId}`, updatedProduct);
     } catch (error) {
       console.error('Error updating product stock:', error);
       throw error;

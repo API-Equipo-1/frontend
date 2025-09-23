@@ -39,3 +39,24 @@ body {
   min-height: 100vh;
   background-color: #ffffff;
 }
+
+/* Global override for browser default form validation styles */
+input:valid,
+input:invalid,
+textarea:valid,
+textarea:invalid,
+select:valid,
+select:invalid {
+  box-shadow: none !important;
+}
+
+/* Remove any default validation styling */
+input:not(.error):valid {
+  border-color: inherit;
+  background-color: inherit;
+}
+
+input:not(.error):invalid {
+  border-color: inherit;
+  background-color: inherit;
+}

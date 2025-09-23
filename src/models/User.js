@@ -29,7 +29,6 @@ export class User {
 //Get user data for API requests (excluding sensitive info when needed)
   toJSON(includeSensitive = true) {
     const userData = {
-      id: this.id,
       username: this.username,
       email: this.email,
       firstName: this.firstName,
@@ -37,6 +36,11 @@ export class User {
       registeredAt: this.registeredAt,
       isActive: this.isActive
     };
+
+    // Only include ID if it's not null (let JSON Server assign IDs for new users)
+    if (this.id !== null && this.id !== undefined) {
+      userData.id = this.id;
+    }
 
     if (includeSensitive) {
       userData.password = this.password;

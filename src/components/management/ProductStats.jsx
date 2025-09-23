@@ -28,10 +28,10 @@ export const ProductStats = () => {
 
   const loadProduct = async () => {
     try {
-      const product = await productService.getProductById(parseInt(productId));
+      const product = await productService.getProductById(productId);
       
       // Verify if the product belongs to the current user
-      if (product.createdBy !== user.id) {
+      if (String(product.createdBy) !== String(user.id)) {
         setError('No tienes permiso para editar este producto');
         return;
       }
@@ -68,10 +68,10 @@ export const ProductStats = () => {
         ...formData,
         price: parseFloat(formData.price),
         stock: parseInt(formData.stock),
-        createdBy: user.id
+        createdBy: String(user.id)
       };
 
-      await productService.updateProduct(parseInt(productId), updatedProduct);
+      await productService.updateProduct(productId, updatedProduct);
       navigate('/product-management');
     } catch (error) {
       setError('Error al actualizar el producto: ' + error.message);

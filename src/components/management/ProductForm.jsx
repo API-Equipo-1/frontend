@@ -36,8 +36,14 @@ export const ProductForm = () => {
         ...formData,
         price: parseFloat(formData.price),
         stock: parseInt(formData.stock),
-        createdBy: user.id // Add the user ID who created the product
+        createdBy: user.id ? String(user.id) : null // Ensure user ID is a string and handle null case
       };
+
+      // Validate that we have a valid user ID
+      if (!productData.createdBy) {
+        setError('Error: No se puede crear el producto. Usuario no válido.');
+        return;
+      }
 
       await productService.createProduct(productData);
       navigate('/product-management'); // Navigate back to the product table

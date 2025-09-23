@@ -41,7 +41,7 @@
       "password": "superMax33"
     },
     {
-      "id": null,
+      "id": "5",
       "username": "ejemplo",
       "email": "ejemplo@gmail.com",
       "firstName": "ejemplo",
@@ -49,6 +49,46 @@
       "registeredAt": "2025-09-20T18:01:51.784Z",
       "isActive": true,
       "password": "A12345678a"
+    },
+    {
+      "id": "6",
+      "username": "JuanPerez",
+      "email": "juanperez@gmail.com",
+      "firstName": "Juan",
+      "lastName": "Perez",
+      "registeredAt": "2025-09-23T04:24:50.952Z",
+      "isActive": true,
+      "password": "JuanPe12"
+    },
+    {
+      "id": "7",
+      "username": "Johndoe",
+      "email": "johndoe@email.com",
+      "firstName": "John",
+      "lastName": "Doe",
+      "registeredAt": "2025-09-23T04:37:44.851Z",
+      "isActive": true,
+      "password": "johnDoe33"
+    },
+    {
+      "id": "83f9",
+      "username": "joe_duplantier",
+      "email": "joe@gmail.com",
+      "firstName": "Joe",
+      "lastName": "Duplantier",
+      "registeredAt": "2025-09-23T04:50:12.186Z",
+      "isActive": true,
+      "password": "Gojira99"
+    },
+    {
+      "id": "25aa",
+      "username": "jimi_hendrix",
+      "email": "jimi@gmail.com",
+      "firstName": "Jimi",
+      "lastName": "Hendrix",
+      "registeredAt": "2025-09-23T04:57:18.010Z",
+      "isActive": true,
+      "password": "Hendrix1"
     }
   ],
   "products": [
@@ -189,7 +229,7 @@
       "name": "Mesa Boogie Mark Five:25",
       "description": "Amplificador de guitarra a válvulas de 25W con múltiples modos.",
       "price": 229999,
-      "stock": 1,
+      "stock": 0,
       "category": "Electrónica",
       "image": "https://thumbs.static-thomann.de/thumb/padthumb600x600/pics/bdb/_34/348173/19207119_800.jpg",
       "extendedDescription": "Amplificador de guitarra a válvulas con potencia de 25W, diseñado para ofrecer una amplia gama de tonos y texturas. Cuenta con múltiples modos de operación, incluyendo clean, crunch y lead, permitiendo al usuario personalizar su sonido. Ideal para estudio y presentaciones en vivo.",
@@ -222,7 +262,7 @@
       "name": "Audio-Technica AT2020 Micrófono Condensador",
       "description": "Micrófono de condensador cardioide para grabación profesional.",
       "price": 45999,
-      "stock": 15,
+      "stock": 11,
       "category": "Audio Profesional",
       "image": "data:image/jpeg;base64,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",
       "extendedDescription": "Micrófono de condensador cardioide Audio-Technica AT2020 ideal para grabación de voces e instrumentos en estudio. Diafragma de condensador de 16mm con respuesta de frecuencia extendida y manejo superior de SPL. Patrón polar cardioide que reduce la captación de sonidos laterales y posteriores. Incluye soporte antivibración.",

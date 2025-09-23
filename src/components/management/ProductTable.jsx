@@ -21,7 +21,14 @@ export const ProductTable = () => {
     productService.getAllProducts()
       .then((data) => {
         // Filter products to show only those created by the current user
-        const userProducts = data.filter(product => product.createdBy && product.createdBy === user.id);
+        // Handle both string and null user IDs
+        const userProducts = data.filter(product => {
+          // Ensure both values are compared as strings for consistency
+          const productCreatedBy = product.createdBy ? String(product.createdBy) : null;
+          const currentUserId = user.id ? String(user.id) : null;
+          
+          return productCreatedBy && currentUserId && productCreatedBy === currentUserId;
+        });
         setProducts(userProducts);
         setLoading(false);
       })

@@ -216,6 +216,19 @@
   box-sizing: border-box;
 }
 
+/* Override browser default valid/invalid styles */
+.form-input:valid {
+  border-color: #e5e7eb;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.form-input:invalid {
+  border-color: #e5e7eb;
+  background: #ffffff;
+  box-shadow: none;
+}
+
 .form-input:focus {
   outline: none;
   border-color: #374151;
