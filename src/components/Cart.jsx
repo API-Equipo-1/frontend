@@ -47,7 +47,8 @@ const Cart = () => {
       {/* Panel del carrito siempre visible */}
       <div className="cart-panel-fixed">
         <div className="cart-header">
-          <h3>🛒 Tu Carrito ({cantidadTotalItems})</h3>
+          <img src="/shopping_cart.png" alt="Carrito" className="cart-header-icon" />
+          <h3> Tu Carrito ({cantidadTotalItems})</h3>
         </div>
 
         <div className="cart-content">
@@ -112,7 +113,7 @@ const Cart = () => {
                       title="Eliminar producto"
                       type="button"
                     >
-                      🗑️
+                      <img src="/trash-icon.svg" alt="Eliminar" className="trash-icon" />
                     </button>
                   </div>
                 ))}

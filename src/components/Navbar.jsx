@@ -12,40 +12,63 @@ export const Navbar = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/catalog");
   };
 
     if (user) {
         return (
             <nav className="nav">
-                <Link to="/catalog" className="site-title">WindCo</Link>
-                <ul>
-                    <Link to="/cart" className="cart-button">
-                        🛒 Ver Carrito
-                        {cantidadTotalItems > 0 && (
-                            <span className="cart-badge">
-                            {cantidadTotalItems}
-                            </span>
-                        )}
-                    </Link>
-                    <button onClick={handleLogout}>Cerrar Sesion</button>
-                </ul>
+                <Link to="/catalog" className="site-title">
+                    <img src="/windco.png" alt="WindCo" className="logo" />
+                    <span className="brand-name">WindCo</span>
+                </Link>
+                <div className="user-controls">
+                    <div
+                        className="user-dropdown-container"
+                        onMouseEnter={() => {
+                            const menu = document.getElementById("user-dropdown-menu");
+                            if (menu) menu.style.display = "block";
+                        }}
+                        onMouseLeave={() => {
+                            const menu = document.getElementById("user-dropdown-menu");
+                            if (menu) menu.style.display = "none";
+                        }}
+                    >
+                        <button className="user-dropdown-button">
+                            Bienvenido/a, {user.firstName} ▼
+                        </button>
+                        <div id="user-dropdown-menu" className="user-dropdown-menu">
+                            <button
+                                className="dropdown-menu-item"
+                                onClick={() => {
+                                    navigate("/product-management");
+                                    document.getElementById("user-dropdown-menu").style.display =
+                                        "none";
+                                }}
+                            >
+                                Gestionar Mis Productos
+                            </button>
+                            <button
+                                className="dropdown-menu-item logout"
+                                onClick={handleLogout}
+                            >
+                                Cerrar Sesión
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </nav>
-        )
+        );
     }
     else {
         return (
             <nav className="nav">
-                <Link to="/catalog" className="site-title">WindCo</Link>
+                <Link to="/catalog" className="site-title">
+                    <img src="/windco.png" alt="WindCo" className="logo" />
+                    <span className="brand-name">WindCo</span>
+                </Link>
                 <ul>
-                    <Link to="/cart" className="cart-button">
-                        🛒 Ver Carrito
-                        {cantidadTotalItems > 0 && (
-                            <span className="cart-badge">
-                            {cantidadTotalItems}
-                            </span>
-                        )}
-                    </Link>
+                   
                     <CustomLink to="/login">Login</CustomLink>
                     <CustomLink to="/register">Register</CustomLink>
                 </ul>

@@ -28,10 +28,10 @@ export const ProductStats = () => {
 
   const loadProduct = async () => {
     try {
-      const product = await productService.getProductById(parseInt(productId));
+      const product = await productService.getProductById(productId);
       
       // Verify if the product belongs to the current user
-      if (product.createdBy !== user.id) {
+      if (String(product.createdBy) !== String(user.id)) {
         setError('No tienes permiso para editar este producto');
         return;
       }
@@ -68,10 +68,10 @@ export const ProductStats = () => {
         ...formData,
         price: parseFloat(formData.price),
         stock: parseInt(formData.stock),
-        createdBy: user.id
+        createdBy: String(user.id)
       };
 
-      await productService.updateProduct(parseInt(productId), updatedProduct);
+      await productService.updateProduct(productId, updatedProduct);
       navigate('/product-management');
     } catch (error) {
       setError('Error al actualizar el producto: ' + error.message);
@@ -89,81 +89,93 @@ export const ProductStats = () => {
       
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Nombre del Producto</label>
+          <label htmlFor="name" className="form-label">Nombre del Producto</label>
           <input
             type="text"
             id="name"
             name="name"
             value={formData.name}
             onChange={handleChange}
+            className="form-input"
+            placeholder="Ej: Ventilador de Techo Premium"
             required
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="description">Descripción</label>
+          <label htmlFor="description" className="form-label">Descripción</label>
           <textarea
             id="description"
             name="description"
             value={formData.description}
             onChange={handleChange}
+            className="form-input"
+            placeholder="Descripción detallada del producto..."
             required
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="category">Categoría</label>
+          <label htmlFor="category" className="form-label">Categoría</label>
           <input
             type="text"
             id="category"
             name="category"
             value={formData.category}
             onChange={handleChange}
+            className="form-input"
+            placeholder="Ej: Ventiladores"
             required
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="price">Precio</label>
+          <label htmlFor="price" className="form-label">Precio</label>
           <input
             type="number"
             id="price"
             name="price"
             value={formData.price}
             onChange={handleChange}
+            className="form-input"
             step="0.01"
             min="0"
+            placeholder="Ej: 299.99"
             required
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="stock">Stock</label>
+          <label htmlFor="stock" className="form-label">Stock</label>
           <input
             type="number"
             id="stock"
             name="stock"
             value={formData.stock}
             onChange={handleChange}
+            className="form-input"
             min="0"
+            placeholder="Ej: 25"
             required
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="image">URL de la Imagen</label>
+          <label htmlFor="image" className="form-label">URL de la Imagen</label>
           <input
             type="url"
             id="image"
             name="image"
             value={formData.image}
             onChange={handleChange}
+            className="form-input"
+            placeholder="https://ejemplo.com/imagen.jpg"
             required
           />
         </div>
 
         <div className="button-group">
-          <button type="submit" className="btn-primary">
+          <button type="submit" className="submit-button">
             Guardar Cambios
           </button>
           <button 

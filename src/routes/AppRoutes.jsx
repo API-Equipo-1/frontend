@@ -4,7 +4,6 @@ import { Product } from "../components/Product";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import ProtectedRoute from "../components/ProtectedRoute";
-import CartPage from "../components/CartPage";
 import Checkout from "../components/Checkout";
 import { ProductTable } from "../components/management/ProductTable.jsx";
 import { ProductForm } from "../components/management/ProductForm.jsx";
@@ -38,15 +37,7 @@ const AppRoutes = () => {
           </>
         } 
       />
-      <Route 
-        path="/cart" 
-        element={
-          <>
-            <Navbar/>
-            <CartPage />
-          </>
-        } 
-      />
+      
       
       {/* Ruta de checkout - accesible sin autenticación, pero validación interna para confirmar pedido */}
       <Route 
@@ -64,7 +55,10 @@ const AppRoutes = () => {
         path="/product-management" 
         element={
           <ProtectedRoute>
-            <ProductTable />
+            <>
+              <Navbar/>
+              <ProductTable />
+            </>
           </ProtectedRoute>
         } 
       />
@@ -72,7 +66,10 @@ const AppRoutes = () => {
         path="/product-form" 
         element={
           <ProtectedRoute>
-            <ProductForm />
+            <>
+              <Navbar/>
+              <ProductForm />
+            </>
           </ProtectedRoute>
         } 
       />
@@ -80,7 +77,10 @@ const AppRoutes = () => {
         path="/product-stats/:productId" 
         element={
           <ProtectedRoute>
-            <ProductStats />
+            <>
+              <Navbar/>
+              <ProductStats />
+            </>
           </ProtectedRoute>
         } 
       />

@@ -22,17 +22,26 @@
 
 .volver-btn {
   padding: 10px 20px;
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  background-color: #ffffff;
+  color: #374151;
+  border: 1px solid #374151;
+  border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease-in-out;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  width: auto;
+  max-width: 200px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .volver-btn:hover {
-  background-color: #5a6268;
+  background-color: #374151;
+  color: #ffffff;
+  border-color: #374151;
+  transform: translateY(-1px);
 }
 
 .checkout-empty {
@@ -162,6 +171,13 @@
   font-weight: 500;
 }
 
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin: 0;
+}
+
 .form-group input {
   width: 100%;
   padding: 12px;
@@ -170,6 +186,54 @@
   font-size: 1em;
   transition: border-color 0.2s, box-shadow 0.2s;
   box-sizing: border-box;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #1f2937;
+  background: #ffffff;
+  transition: all 0.2s ease-in-out;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+/* Override browser default valid/invalid styles */
+.form-input:valid {
+  border-color: #e5e7eb;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.form-input:invalid {
+  border-color: #e5e7eb;
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #374151;
+  box-shadow: 0 0 0 3px rgba(55, 65, 81, 0.1);
+  transform: translateY(-1px);
+}
+
+.form-input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.form-input.error {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+}
+
+.form-input.error:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
 }
 
 .form-group input:focus {
@@ -184,10 +248,10 @@
 }
 
 .error-message {
-  color: #e74c3c;
-  font-size: 0.9em;
-  margin-top: 5px;
-  display: block;
+  font-size: 0.75rem;
+  color: #ef4444;
+  font-weight: 500;
+  margin-top: 0.25rem;
 }
 
 .submit-order-btn {
@@ -210,9 +274,11 @@
 }
 
 .submit-order-btn:disabled {
-  background-color: #6c757d;
+  background-color: #e5e7eb;
+  color: #9ca3af;
   cursor: not-allowed;
   transform: none;
+  border: 1px solid #d1d5db;
 }
 
 .auth-warning {

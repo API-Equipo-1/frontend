@@ -88,83 +88,92 @@ const Login = () => {
   };
 
   return (
-    <div className="register-container">
-      <div className="register-card">
-        <h1 className="register-title">Iniciar Sesión</h1>
-        <p className="register-subtitle">
-          {redirectTo === '/checkout' 
-            ? 'Para finalizar tu compra, necesitas iniciar sesión' 
-            : 'Accede a tu cuenta'
-          }
-        </p>
-        
-        {redirectTo === '/checkout' && (
-          <div className="checkout-info" style={{
-            backgroundColor: '#e3f2fd',
-            padding: '0.75rem',
-            borderRadius: '4px',
-            marginBottom: '1rem',
-            border: '1px solid #bbdefb'
-          }}>
-            <p style={{ margin: 0, fontSize: '0.9rem', color: '#1565c0' }}>
-              🛒 Tu carrito se mantendrá guardado mientras inicias sesión
-            </p>
-          </div>
-        )}
-        
-        <form onSubmit={handleSubmit} className="register-form">
-          {errors.general && (
-            <div className="error-message general-error">
-              {errors.general}
+    <>
+      <nav className="nav">
+        <Link to="/catalog" className="site-title">
+            <img src="/windco.png" alt="WindCo" className="logo" />
+            <span className="brand-name">WindCo</span>
+        </Link>
+      </nav>
+    
+      <div className="register-container">
+        <div className="register-card">
+          <h1 className="register-title">Iniciar Sesión</h1>
+          <p className="register-subtitle">
+            {redirectTo === '/checkout' 
+              ? 'Para finalizar tu compra, necesitas iniciar sesión' 
+              : 'Accede a tu cuenta'
+            }
+          </p>
+          
+          {redirectTo === '/checkout' && (
+            <div className="checkout-info" style={{
+              backgroundColor: '#e3f2fd',
+              padding: '0.75rem',
+              borderRadius: '4px',
+              marginBottom: '1rem',
+              border: '1px solid #bbdefb'
+            }}>
+              <p style={{ margin: 0, fontSize: '0.9rem', color: '#1565c0' }}>
+                🛒 Tu carrito se mantendrá guardado mientras inicias sesión
+              </p>
             </div>
           )}
           
-          <div className="form-group">
-            <label htmlFor="email" className="form-label">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              className={`form-input ${errors.email ? 'error' : ''}`}
-              placeholder="juan@ejemplo.com"
-            />
-            {errors.email && <span className="error-message">{errors.email}</span>}
-          </div>
+          <form onSubmit={handleSubmit} className="register-form">
+            {errors.general && (
+              <div className="error-message general-error">
+                {errors.general}
+              </div>
+            )}
+            
+            <div className="form-group">
+              <label htmlFor="email" className="form-label">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className={`form-input ${errors.email ? 'error' : ''}`}
+                placeholder="juan@ejemplo.com"
+              />
+              {errors.email && <span className="error-message">{errors.email}</span>}
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="password" className="form-label">
-              Contraseña
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              className={`form-input ${errors.password ? 'error' : ''}`}
-              placeholder="Ingresa tu contraseña"
-            />
-            {errors.password && <span className="error-message">{errors.password}</span>}
-          </div>
+            <div className="form-group">
+              <label htmlFor="password" className="form-label">
+                Contraseña
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                className={`form-input ${errors.password ? 'error' : ''}`}
+                placeholder="Ingresa tu contraseña"
+              />
+              {errors.password && <span className="error-message">{errors.password}</span>}
+            </div>
 
-          <button 
-            type="submit" 
-            className={`submit-button ${isSubmitting ? 'loading' : ''}`}
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? 'Iniciando sesión...' : 'Iniciar Sesión'}
-          </button>
-        </form>
+            <button 
+              type="submit" 
+              className={`submit-button ${isSubmitting ? 'loading' : ''}`}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+            </button>
+          </form>
 
-        <p className="login-link">
-          ¿No tienes cuenta? <Link to={`/register${redirectTo !== '/catalog' ? `?redirect=${encodeURIComponent(redirectTo)}` : ''}`}>Regístrate</Link>
-        </p>
+          <p className="login-link">
+            ¿No tienes cuenta? <Link to={`/register${redirectTo !== '/catalog' ? `?redirect=${encodeURIComponent(redirectTo)}` : ''}`}>Regístrate</Link>
+          </p>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

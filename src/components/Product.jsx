@@ -14,12 +14,11 @@ export const Product = () => {
   const [stock, setStock] = useState(0);
 
   useEffect(() => {
-    productService
-      .getProductById(id)
+    productService.getProductById(id)
       .then((foundProduct) => {
         setSelectedProduct(foundProduct);
         // Calculate available stock based on cart contents
-        const itemInCart = carrito.find((item) => item.id === foundProduct.id);
+        const itemInCart = carrito.find(item => item.id === foundProduct.id);
         const quantityInCart = itemInCart ? itemInCart.cantidad : 0;
         setStock(foundProduct.stock - quantityInCart);
       })
@@ -36,7 +35,7 @@ export const Product = () => {
   };
 
   const handleBackToCatalog = () => {
-    navigate("/catalog");
+    navigate('/catalog');
   };
 
   return (
@@ -50,7 +49,7 @@ export const Product = () => {
           <div className="detalle-producto">
             <img src={selectedProduct.image} alt={selectedProduct.name} />
             <div>
-              <p>{selectedProduct.extendedDescription}</p>
+              <p>{selectedProduct.extendedDescription || selectedProduct.description}</p>
               <p>Precio: ${selectedProduct.price}</p>
               <p>Stock: {stock}</p>
               <div className="buttons">

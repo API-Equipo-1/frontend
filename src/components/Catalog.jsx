@@ -10,8 +10,12 @@ import Cart from "./Cart";
 
 export const Catalog = () => {
   const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]); // Guardamos todos los productos
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [categories, setCategories] = useState([]);
   const { user } = useAuth();
   const { setProductosOriginalesFromAPI, carrito } = useCart();
   const navigate = useNavigate();
@@ -24,7 +28,14 @@ export const Catalog = () => {
       .getAllProducts()
       .then((data) => {
         console.log("Products loaded:", data);
-        setProducts(data.sort((a, b) => a.name.localeCompare(b.name)));
+        const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
+        setAllProducts(sortedData); // Guardamos todos los productos
+        setProducts(sortedData);
+        
+        // Extraer categorías únicas
+        const uniqueCategories = [...new Set(data.map(product => product.category))];
+        setCategories(uniqueCategories.sort());
+        
         // Set original products for cart stock validation
         setProductosOriginalesFromAPI(data);
         setLoading(false);
@@ -36,54 +47,91 @@ export const Catalog = () => {
       });
   }, [setProductosOriginalesFromAPI]);
 
+  // Efecto para filtrar productos cuando cambia el término de búsqueda o la categoría
+  useEffect(() => {
+    let filteredProducts = [...allProducts];
+
+    // Filtrar por categoría
+    if (selectedCategory) {
+      filteredProducts = filteredProducts.filter(
+        product => product.category === selectedCategory
+      );
+    }
+
+    // Filtrar por término de búsqueda
+    if (searchTerm.trim()) {
+      filteredProducts = filteredProducts.filter(
+        product =>
+          product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          product.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    setProducts(filteredProducts);
+  }, [searchTerm, selectedCategory, allProducts]);
+
+  // Función para limpiar filtros
+  const clearFilters = () => {
+    setSearchTerm("");
+    setSelectedCategory("");
+  };
+
   return (
     <div>
-      <header style={{
-        padding: '1rem 2rem',
-        backgroundColor: '#f8f9fa',
-        borderBottom: '1px solid #e5e7eb',
-        marginBottom: '2rem'
-      }}>
-        <div style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'space-between',
-          width: '100%' 
-        }}> 
-          <h1 style={{ margin: 0 }}>Catálogo de productos</h1>
-          {user && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <button 
-                onClick={() => navigate('/product-management')}
-                style={{
-                  padding: '0.5rem 1rem',
-                  backgroundColor: '#4CAF50',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '4px',
-                  cursor: 'pointer'
-                }}
-              >
-                Gestionar Mis Productos
-              </button>
-              <p style={{ 
-                color: '#6b7280', 
-                fontSize: '0.875rem',
-                margin: 0
-              }}>
-                Bienvenido/a, {user.firstName} {user.lastName}
-              </p>
-            </div>
-          )}
+      {/* Controles de búsqueda y filtrado */}
+      <div className="catalog-filters">
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Buscar productos..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
         </div>
-      </header>
+        
+        <div className="filter-container">
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="category-select"
+          >
+            <option value="">Todas las categorías</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {(searchTerm || selectedCategory) && (
+          <button onClick={clearFilters} className="clear-filters-btn">
+            Limpiar filtros
+          </button>
+        )}
+      </div>
+
+      {/* Resultados de búsqueda */}
+      {(searchTerm || selectedCategory) && (
+        <div className="search-results-info">
+          <p>
+            {products.length} producto{products.length !== 1 ? 's' : ''} encontrado{products.length !== 1 ? 's' : ''}
+            {searchTerm && ` para "${searchTerm}"`}
+            {selectedCategory && ` en "${selectedCategory}"`}
+          </p>
+        </div>
+      )}
 
       <div className="catalog-content" style={{ display: 'flex', gap: '2rem' }}>
         <div className="product-list" style={{ flex: 1 }}>
           {loading && <p>Cargando productos...</p>}
           {error && <p style={{ color: "red" }}>Error: {error}</p>}
-          {!loading && !error && products.length === 0 && (
+          {!loading && !error && products.length === 0 && !searchTerm && !selectedCategory && (
             <p>No se encontraron productos.</p>
+          )}
+          {!loading && !error && products.length === 0 && (searchTerm || selectedCategory) && (
+            <p>No se encontraron productos que coincidan con los filtros aplicados.</p>
           )}
           {!loading &&
             !error &&
