@@ -99,6 +99,16 @@
       "registeredAt": "2025-09-23T19:10:52.621Z",
       "isActive": true,
       "password": "Hammet81"
+    },
+    {
+      "id": "1120",
+      "username": "pessi",
+      "email": "pessi@gmail.com",
+      "firstName": "Pessi",
+      "lastName": "Frionel",
+      "registeredAt": "2025-09-23T22:17:55.421Z",
+      "isActive": true,
+      "password": "Elbichosiu7"
     }
   ],
   "products": [
@@ -283,7 +293,7 @@
       "name": "Adidas Ultraboost 22",
       "description": "Zapatillas de running con tecnología Boost y upper Primeknit.",
       "price": 52999,
-      "stock": 35,
+      "stock": 33,
       "category": "Calzado",
       "image": "https://production.cdn.vaypol.com/variants/tf7qhe69a7xsd9udiv3yj40xf7ul/e82c8d6171dd25bb538f2e7263b5bc7dfc6a79352d85923074be76df53fbc6f4",
       "extendedDescription": "Zapatillas de running Adidas Ultraboost 22 con tecnología Boost que devuelve energía en cada zancada. Upper Primeknit+ que se adapta al pie, suela Continental™ para tracción superior y sistema Torsion Spring para propulsión. Perfectas para corredores de larga distancia.",

@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../hooks/useAuth';
+import { FormInput } from './FormInput';
+import { FormRow } from './FormRow';
 import { productService } from '../services/productService';
 import { validateCheckoutForm } from '../utils/validation';
 import '../styles/Checkout.css';
@@ -177,107 +179,79 @@ const Checkout = () => {
         <div className="customer-form">
           <h3>Datos de Envío</h3>
           <form onSubmit={handleSubmit}>
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="nombre" className="form-label">Nombre *</label>
-                <input
-                  type="text"
-                  id="nombre"
-                  name="nombre"
-                  value={datosCliente.nombre}
-                  onChange={handleInputChange}
-                  className={`form-input ${errores.nombre ? 'error' : ''}`}
-                  placeholder="Ej: Juan"
-                />
-                {errores.nombre && <span className="error-message">{errores.nombre}</span>}
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="apellido" className="form-label">Apellido *</label>
-                <input
-                  type="text"
-                  id="apellido"
-                  name="apellido"
-                  value={datosCliente.apellido}
-                  onChange={handleInputChange}
-                  className={`form-input ${errores.apellido ? 'error' : ''}`}
-                  placeholder="Ej: Pérez"
-                />
-                {errores.apellido && <span className="error-message">{errores.apellido}</span>}
-              </div>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="email" className="form-label">Email *</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={datosCliente.email}
+            <FormRow>
+              <FormInput
+                label="Nombre"
+                name="nombre"
+                value={datosCliente.nombre}
                 onChange={handleInputChange}
-                className={`form-input ${errores.email ? 'error' : ''}`}
-                placeholder="juan@ejemplo.com"
+                error={errores.nombre}
+                placeholder="Ej: Juan"
+                required
               />
-              {errores.email && <span className="error-message">{errores.email}</span>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="telefono" className="form-label">Teléfono *</label>
-              <input
-                type="tel"
-                id="telefono"
-                name="telefono"
-                value={datosCliente.telefono}
+              <FormInput
+                label="Apellido"
+                name="apellido"
+                value={datosCliente.apellido}
                 onChange={handleInputChange}
-                className={`form-input ${errores.telefono ? 'error' : ''}`}
-                placeholder="Ej: +54 11 1234-5678"
+                error={errores.apellido}
+                placeholder="Ej: Pérez"
+                required
               />
-              {errores.telefono && <span className="error-message">{errores.telefono}</span>}
-            </div>
+            </FormRow>
 
-            <div className="form-group">
-              <label htmlFor="direccion" className="form-label">Dirección *</label>
-              <input
-                type="text"
-                id="direccion"
-                name="direccion"
-                value={datosCliente.direccion}
+            <FormInput
+              label="Email"
+              name="email"
+              type="email"
+              value={datosCliente.email}
+              onChange={handleInputChange}
+              error={errores.email}
+              placeholder="juan@ejemplo.com"
+              required
+            />
+
+            <FormInput
+              label="Teléfono"
+              name="telefono"
+              type="tel"
+              value={datosCliente.telefono}
+              onChange={handleInputChange}
+              error={errores.telefono}
+              placeholder="Ej: +54 11 1234-5678"
+              required
+            />
+
+            <FormInput
+              label="Dirección"
+              name="direccion"
+              value={datosCliente.direccion}
+              onChange={handleInputChange}
+              error={errores.direccion}
+              placeholder="Ej: Av. Corrientes 1234"
+              required
+            />
+
+            <FormRow>
+              <FormInput
+                label="Ciudad"
+                name="ciudad"
+                value={datosCliente.ciudad}
                 onChange={handleInputChange}
-                className={`form-input ${errores.direccion ? 'error' : ''}`}
-                placeholder="Ej: Av. Corrientes 1234"
+                error={errores.ciudad}
+                placeholder="Ej: Buenos Aires"
+                required
               />
-              {errores.direccion && <span className="error-message">{errores.direccion}</span>}
-            </div>
-
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="ciudad" className="form-label">Ciudad *</label>
-                <input
-                  type="text"
-                  id="ciudad"
-                  name="ciudad"
-                  value={datosCliente.ciudad}
-                  onChange={handleInputChange}
-                  className={`form-input ${errores.ciudad ? 'error' : ''}`}
-                  placeholder="Ej: Buenos Aires"
-                />
-                {errores.ciudad && <span className="error-message">{errores.ciudad}</span>}
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="codigoPostal" className="form-label">Código Postal *</label>
-                <input
-                  type="text"
-                  id="codigoPostal"
-                  name="codigoPostal"
-                  value={datosCliente.codigoPostal}
-                  onChange={handleInputChange}
-                  className={`form-input ${errores.codigoPostal ? 'error' : ''}`}
-                  placeholder="Ej: 1234"
-                />
-                {errores.codigoPostal && <span className="error-message">{errores.codigoPostal}</span>}
-              </div>
-            </div>
+              <FormInput
+                label="Código Postal"
+                name="codigoPostal"
+                value={datosCliente.codigoPostal}
+                onChange={handleInputChange}
+                error={errores.codigoPostal}
+                placeholder="Ej: 1234"
+                required
+              />
+            </FormRow>
 
             <button 
               type="submit" 
