@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { User } from '../models/User';
 import { userService } from '../services/userService';
+import { FormInput } from './FormInput';
+import { FormRow } from './FormRow';
 import '../styles/Register.css';
 
 const Register = () => {
@@ -119,87 +121,58 @@ const Register = () => {
             </div>
           )}
           
-          <div className="form-group">
-            <label htmlFor="username" className="form-label">
-              Nombre de Usuario
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
+          <FormInput
+            label="Nombre de Usuario"
+            name="username"
+            value={formData.username}
+            onChange={handleInputChange}
+            error={errors.username}
+            placeholder="Ej: juan_perez"
+            required
+          />
+
+          <FormRow>
+            <FormInput
+              label="Nombre"
+              name="firstName"
+              value={formData.firstName}
               onChange={handleInputChange}
-              className={`form-input ${errors.username ? 'error' : ''}`}
-              placeholder="Ej: juan_perez"
+              error={errors.firstName}
+              placeholder="Juan"
+              required
             />
-            {errors.username && <span className="error-message">{errors.username}</span>}
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="firstName" className="form-label">
-                Nombre
-              </label>
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleInputChange}
-                className={`form-input ${errors.firstName ? 'error' : ''}`}
-                placeholder="Juan"
-              />
-              {errors.firstName && <span className="error-message">{errors.firstName}</span>}
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="lastName" className="form-label">
-                Apellido
-              </label>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleInputChange}
-                className={`form-input ${errors.lastName ? 'error' : ''}`}
-                placeholder="Pérez"
-              />
-              {errors.lastName && <span className="error-message">{errors.lastName}</span>}
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="email" className="form-label">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
+            <FormInput
+              label="Apellido"
+              name="lastName"
+              value={formData.lastName}
               onChange={handleInputChange}
-              className={`form-input ${errors.email ? 'error' : ''}`}
-              placeholder="juan@ejemplo.com"
+              error={errors.lastName}
+              placeholder="Pérez"
+              required
             />
-            {errors.email && <span className="error-message">{errors.email}</span>}
-          </div>
+          </FormRow>
 
-          <div className="form-group">
-            <label htmlFor="password" className="form-label">
-              Contraseña
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              className={`form-input ${errors.password ? 'error' : ''}`}
-              placeholder="Mínimo 8 caracteres"
-            />
-            {errors.password && <span className="error-message">{errors.password}</span>}
-          </div>
+          <FormInput
+            label="Email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            error={errors.email}
+            placeholder="juan@ejemplo.com"
+            required
+          />
+
+          <FormInput
+            label="Contraseña"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+            error={errors.password}
+            placeholder="Mínimo 8 caracteres"
+            required
+          />
 
           <button 
             type="submit" 

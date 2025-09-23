@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { userService } from '../services/userService';
 import { useAuth } from '../hooks/useAuth';
+import { FormInput } from './FormInput';
+import { FormRow } from './FormRow';
 import '../styles/Register.css';
 
 const Login = () => {
@@ -127,37 +129,27 @@ const Login = () => {
               </div>
             )}
             
-            <div className="form-group">
-              <label htmlFor="email" className="form-label">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className={`form-input ${errors.email ? 'error' : ''}`}
-                placeholder="juan@ejemplo.com"
-              />
-              {errors.email && <span className="error-message">{errors.email}</span>}
-            </div>
+            <FormInput
+              label="Email"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              error={errors.email}
+              placeholder="juan@ejemplo.com"
+              required
+            />
 
-            <div className="form-group">
-              <label htmlFor="password" className="form-label">
-                Contraseña
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                className={`form-input ${errors.password ? 'error' : ''}`}
-                placeholder="Ingresa tu contraseña"
-              />
-              {errors.password && <span className="error-message">{errors.password}</span>}
-            </div>
+            <FormInput
+              label="Contraseña"
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              error={errors.password}
+              placeholder="Ingresa tu contraseña"
+              required
+            />
 
             <button 
               type="submit" 
