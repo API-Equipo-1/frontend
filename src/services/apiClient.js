@@ -1,0 +1,109 @@
+// Centralized API client configuration
+const API_BASE_URL = 'http://localhost:8080/api';
+
+// Helper function to get JWT token from localStorage
+const getAuthToken = () => {
+  return localStorage.getItem('jwt-token');
+};
+
+// Helper function to create headers with JWT
+const getHeaders = (includeAuth = false) => {
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+  
+  if (includeAuth) {
+    const token = getAuthToken();
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+  }
+  
+  return headers;
+};
+
+export const apiClient = {
+  async get(endpoint, requiresAuth = false) {
+    try {
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        method: 'GET',
+        headers: getHeaders(requiresAuth),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('API GET error:', error);
+      throw error;
+    }
+  },
+
+  async post(endpoint, data, requiresAuth = false) {
+    try {
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        method: 'POST',
+        headers: getHeaders(requiresAuth),
+        body: JSON.stringify(data)
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      // Handle text response for login endpoint
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        return await response.json();
+      }
+      return await response.text();
+    } catch (error) {
+      console.error('API POST error:', error);
+      throw error;
+    }
+  },
+
+  async put(endpoint, data, requiresAuth = false) {
+    try {
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        method: 'PUT',
+        headers: getHeaders(requiresAuth),
+        body: JSON.stringify(data)
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('API PUT error:', error);
+      throw error;
+    }
+  },
+
+  async delete(endpoint, requiresAuth = false) {
+    try {
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        method: 'DELETE',
+        headers: getHeaders(requiresAuth),
+      });
+      
+      // Handle 204 No Content response
+      if (response.status === 204) {
+        return { success: true };
+      }
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      // Try to parse JSON if there's content
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        return await response.json();
+      }
+      
+      return { success: true };
+    } catch (error) {
+      console.error('API DELETE error:', error);
+      throw error;
+    }
+  }
+};
