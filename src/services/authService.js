@@ -3,7 +3,7 @@ import { apiClient } from './apiClient';
 export const authService = {
   async register(userData) {
     try {
-      // Map frontend format to backend format
+      // Mapear formato frontend a formato backend
       const backendUser = {
         nombre: userData.firstName,
         apellido: userData.lastName,
@@ -25,10 +25,10 @@ export const authService = {
       const token = await apiClient.post('/auth/login', credentials);
       
       if (token) {
-        // Store the JWT token
+        // Guardar el token JWT
         localStorage.setItem('jwt-token', token);
         
-        // Create basic user object from email
+        // Crear objeto básico de usuario desde el email
         const user = {
           email: email,
           username: email.split('@')[0],

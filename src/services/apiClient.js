@@ -1,12 +1,12 @@
-// Centralized API client configuration
+// Configuración centralizada del cliente API
 const API_BASE_URL = 'http://localhost:8080/api';
 
-// Helper function to get JWT token from localStorage
+// Función auxiliar para obtener el token JWT del localStorage
 const getAuthToken = () => {
   return localStorage.getItem('jwt-token');
 };
 
-// Helper function to create headers with JWT
+// Función auxiliar para crear headers con JWT
 const getHeaders = (includeAuth = false) => {
   const headers = {
     'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ export const apiClient = {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      // Handle text response for login endpoint
+      // Manejar respuesta de texto para endpoint de login
       const contentType = response.headers.get('content-type');
       if (contentType && contentType.includes('application/json')) {
         return await response.json();
@@ -85,7 +85,7 @@ export const apiClient = {
         headers: getHeaders(requiresAuth),
       });
       
-      // Handle 204 No Content response
+      // Manejar respuesta 204 No Content
       if (response.status === 204) {
         return { success: true };
       }
@@ -94,7 +94,7 @@ export const apiClient = {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
-      // Try to parse JSON if there's content
+      // Intentar parsear JSON si hay contenido
       const contentType = response.headers.get('content-type');
       if (contentType && contentType.includes('application/json')) {
         return await response.json();

@@ -1,4 +1,4 @@
-// Centralized service exports for cleaner imports
+// Exportaciones centralizadas de servicios para imports más limpios
 export { apiClient } from './apiClient';
 export { authService } from './authService';
 export { productService } from './productService';

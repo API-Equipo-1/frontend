@@ -1,6 +1,6 @@
 import { apiClient } from './apiClient';
 
-// Helper function to map backend product to frontend format
+// Función auxiliar para mapear producto del backend al formato frontend
 const mapProductToFrontend = (product) => ({
   id: product.id,
   name: product.nombre,
@@ -12,7 +12,7 @@ const mapProductToFrontend = (product) => ({
   _original: product
 });
 
-// Helper function to map frontend product to backend format
+// Función auxiliar para mapear producto del frontend al formato backend
 const mapProductToBackend = (product) => ({
   nombre: product.name,
   descripcion: product.description,
@@ -93,13 +93,13 @@ export const productService = {
 
   async updateProduct(id, updatedFields) {
     try {
-      // Backend only accepts precio and stock for updates
+      // El backend solo acepta precio y stock para actualizaciones
       const backendUpdate = {
         precio: updatedFields.price !== undefined ? updatedFields.price : undefined,
         stock: updatedFields.stock !== undefined ? updatedFields.stock : undefined
       };
       
-      // Remove undefined values
+      // Eliminar valores undefined
       Object.keys(backendUpdate).forEach(key => 
         backendUpdate[key] === undefined && delete backendUpdate[key]
       );

@@ -1,6 +1,6 @@
 import { apiClient } from './apiClient';
 
-// Helper function to map backend user to frontend format
+// Función auxiliar para mapear usuario del backend al formato frontend
 const mapUserToFrontend = (user) => ({
   id: user.usuario_id,
   username: user.email.split('@')[0],
@@ -22,13 +22,13 @@ export const userService = {
   },
 
   async createUser(userData) {
-    // For creating users, use authService.register instead
+    // Para crear usuarios, usar authService.register en su lugar
     console.warn('Use authService.register() for user registration');
     throw new Error('Use authService.register() for user registration');
   },
 
   async updateUser(id, userData) {
-    // Note: Backend doesn't have a specific update user endpoint
+    // Nota: El backend no tiene un endpoint específico para actualizar usuarios
     console.warn('Update user endpoint not implemented in backend');
     throw new Error('Update user functionality not available');
   },
@@ -50,7 +50,7 @@ export const userService = {
   async validateRegistration(userData) {
     const errors = {};
 
-    // Check if email exists
+    // Verificar si el email ya existe
     if (await this.checkEmailExists(userData.email)) {
       errors.email = 'Este email ya está registrado';
     }
