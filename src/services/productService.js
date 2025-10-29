@@ -1,9 +1,33 @@
-const API_BASE_URL = 'http://localhost:3001';
+const API_BASE_URL = 'http://localhost:8080/api';
+
+// Helper function to get JWT token from localStorage
+const getAuthToken = () => {
+  return localStorage.getItem('jwt-token');
+};
+
+// Helper function to create headers with JWT
+const getHeaders = (includeAuth = false) => {
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+  
+  if (includeAuth) {
+    const token = getAuthToken();
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+  }
+  
+  return headers;
+};
 
 export const api = {
-  async get(endpoint) {
+  async get(endpoint, requiresAuth = false) {
     try {
-      const response = await fetch(`${API_BASE_URL}${endpoint}`);
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        method: 'GET',
+        headers: getHeaders(requiresAuth),
+      });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -14,32 +38,33 @@ export const api = {
     }
   },
 
-  async post(endpoint, data) {
+  async post(endpoint, data, requiresAuth = false) {
     try {
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: getHeaders(requiresAuth),
         body: JSON.stringify(data)
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      return await response.json();
+      // Handle text response for login endpoint
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        return await response.json();
+      }
+      return await response.text();
     } catch (error) {
       console.error('API POST error:', error);
       throw error;
     }
   },
 
-  async put(endpoint, data) {
+  async put(endpoint, data, requiresAuth = false) {
     try {
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: getHeaders(requiresAuth),
         body: JSON.stringify(data)
       });
       if (!response.ok) {
@@ -52,15 +77,29 @@ export const api = {
     }
   },
 
-  async delete(endpoint) {
+  async delete(endpoint, requiresAuth = false) {
     try {
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: getHeaders(requiresAuth),
       });
+      
+      // Handle 204 No Content response
+      if (response.status === 204) {
+        return { success: true };
+      }
+      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      return await response.json();
+      
+      // Try to parse JSON if there's content
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        return await response.json();
+      }
+      
+      return { success: true };
     } catch (error) {
       console.error('API DELETE error:', error);
       throw error;
@@ -71,17 +110,35 @@ export const api = {
 export const productService = {
   
   async getAllProducts() {
-    return await api.get('/products');
+    // Map backend response to frontend expected format
+    const products = await api.get('/productos');
+    return products.map(p => ({
+      id: p.id,
+      name: p.nombre,
+      description: p.descripcion,
+      price: p.precio,
+      stock: p.stock,
+      category: p.categorias && p.categorias.length > 0 ? p.categorias[0].nombre : 'Sin categoría',
+      image: p.imagen || 'https://via.placeholder.com/300x200?text=No+Image',
+      // Keep original data for reference
+      _original: p
+    }));
   },
 
   async getProductById(id) {
     try {
-      const products = await this.getAllProducts();
-      const product = products.find(p => String(p.id) === String(id));
-      if (!product) {
-        throw new Error(`Product with id ${id} not found`);
-      }
-      return product;
+      const product = await api.get(`/productos/${id}`);
+      // Map backend response to frontend expected format
+      return {
+        id: product.id,
+        name: product.nombre,
+        description: product.descripcion,
+        price: product.precio,
+        stock: product.stock,
+        category: product.categorias && product.categorias.length > 0 ? product.categorias[0].nombre : 'Sin categoría',
+        image: product.imagen || 'https://via.placeholder.com/300x200?text=No+Image',
+        _original: product
+      };
     } catch (error) {
       console.error('Error fetching product by id:', error);
       throw error;
@@ -133,9 +190,28 @@ export const productService = {
 
   async createProduct(newProduct) {
     try {
-      // Don't manually assign ID - let JSON Server handle it
-      // JSON Server will automatically assign the next available ID
-      return await api.post('/products', newProduct);
+      // Map frontend format to backend expected format
+      const backendProduct = {
+        nombre: newProduct.name,
+        descripcion: newProduct.description,
+        precio: newProduct.price,
+        stock: newProduct.stock,
+        categorias: newProduct.category ? [{ nombre: newProduct.category }] : []
+      };
+      
+      const createdProduct = await api.post('/productos', backendProduct, true); // requires auth
+      
+      // Map response back to frontend format
+      return {
+        id: createdProduct.id,
+        name: createdProduct.nombre,
+        description: createdProduct.descripcion,
+        price: createdProduct.precio,
+        stock: createdProduct.stock,
+        category: createdProduct.categorias && createdProduct.categorias.length > 0 ? createdProduct.categorias[0].nombre : 'Sin categoría',
+        image: 'https://via.placeholder.com/300x200?text=No+Image',
+        _original: createdProduct
+      };
     } catch (error) {
       console.error('Error creating product:', error);
       throw error;
@@ -144,8 +220,7 @@ export const productService = {
 
   async deleteProduct(id) {
     try {
-      // Ensure we're using the ID as-is, whether it's string or number
-      const response = await api.delete(`/products/${id}`);
+      const response = await api.delete(`/productos/${id}`, true); // requires auth
       return response;
     } catch (error) {
       console.error('Error deleting product:', error);
@@ -155,13 +230,25 @@ export const productService = {
 
   async updateProduct(id, updatedFields) {
     try {
-      const products = await this.getAllProducts();
-      const productIndex = products.findIndex(p => String(p.id) === String(id));
-      if (productIndex === -1) {
-        throw new Error(`Product with id ${id} not found`);
-      }
-      const updatedProduct = { ...products[productIndex], ...updatedFields };
-      return await api.put(`/products/${id}`, updatedProduct);
+      // Backend only accepts precio and stock for updates
+      const backendUpdate = {
+        precio: updatedFields.price !== undefined ? updatedFields.price : undefined,
+        stock: updatedFields.stock !== undefined ? updatedFields.stock : undefined
+      };
+      
+      // Remove undefined values
+      Object.keys(backendUpdate).forEach(key => 
+        backendUpdate[key] === undefined && delete backendUpdate[key]
+      );
+      
+      const updatedProduct = await api.put(`/productos/${id}`, backendUpdate, true); // requires auth
+      
+      // Map response back to frontend format
+      return {
+        id: id,
+        price: updatedProduct.precio,
+        stock: updatedProduct.stock
+      };
     } catch (error) {
       console.error('Error updating product:', error);
       throw error;
@@ -170,9 +257,7 @@ export const productService = {
 
   async updateProductStock(productId, newStock) {
     try {
-      const product = await this.getProductById(productId);
-      const updatedProduct = { ...product, stock: newStock };
-      return await api.put(`/products/${productId}`, updatedProduct);
+      return await this.updateProduct(productId, { stock: newStock });
     } catch (error) {
       console.error('Error updating product stock:', error);
       throw error;

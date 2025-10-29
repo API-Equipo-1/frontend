@@ -69,8 +69,8 @@ const Login = () => {
       const loginResult = await userService.loginUser(formData.email, formData.password);
 
       if (loginResult.success) {
-        // Almacenar datos del usuario en el contexto de autenticación
-        login(loginResult.user);
+        // Almacenar datos del usuario en el contexto de autenticación (with JWT token)
+        login(loginResult.user, loginResult.token);
         navigate(redirectTo);
         
       } else {

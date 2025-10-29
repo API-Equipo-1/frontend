@@ -31,14 +31,14 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem('carrito', JSON.stringify(carrito));
   }, [carrito]);
 
-  // Function to map product fields from English API to Spanish expected by cart components
+  // Function to map product fields from backend API to Spanish expected by cart components
   const mapProductToCartFormat = useCallback((product) => ({
     id: product.id,
-    nombre: product.name,
-    descripcion: product.description,
-    precio: product.price,
+    nombre: product.name || product.nombre,
+    descripcion: product.description || product.descripcion,
+    precio: product.price || product.precio,
     stock: product.stock,
-    imagen: product.image,
+    imagen: product.image || product.imagen || 'https://via.placeholder.com/300x200?text=No+Image',
     // Keep original for reference
     _original: product
   }), []);
