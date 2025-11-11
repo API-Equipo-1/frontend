@@ -5,6 +5,7 @@ import { useAuth } from '../hooks/useAuth';
 import { FormInput } from './FormInput';
 import { FormRow } from './FormRow';
 import { productService } from '../services/productService';
+import { orderService } from '../services/orderService';
 import { validateCheckoutForm } from '../utils/validation';
 import '../styles/Checkout.css';
 
@@ -77,21 +78,31 @@ const Checkout = () => {
 
       // si hay stock, actualizar stock en el inventario
       await productService.updateMultipleProductsStock(carrito);
-      await new Promise(resolve => setTimeout(resolve, 2000));
 
-      const pedido = {
-        id: Date.now(),
-        cliente: datosCliente,
-        productos: carrito,
-        total: totalPrecio,
-        fecha: new Date().toISOString(),
-        estado: 'confirmado'
+      // Preparar datos del pedido para el backend
+      const pedidoData = {
+        usuarioId: user.id,
+        nombre: datosCliente.nombre,
+        apellido: datosCliente.apellido,
+        email: datosCliente.email,
+        telefono: datosCliente.telefono,
+        direccion: {
+          calle: datosCliente.direccion,
+          numero: '', // Se puede agregar un campo específico si se necesita
+          localidad: datosCliente.ciudad,
+          provincia: '', // Se puede agregar si se necesita
+          pais: 'Argentina', // Valor por defecto
+          codigoPostal: datosCliente.codigoPostal
+        },
+        detalles: orderService.formatCartToOrderDetails(carrito)
       };
 
-      // simular guardar el pedido 
-      console.log('Pedido procesado:', pedido);
+      // Guardar el pedido en la base de datos
+      const pedidoGuardado = await orderService.createPedido(pedidoData);
       
-      alert(`¡Pedido confirmado! \nTotal: $${totalPrecio.toFixed(2)} \nNúmero de pedido: ${pedido.id}`);
+      console.log('Pedido guardado en BD:', pedidoGuardado);
+      
+      alert(`¡Pedido confirmado! \nTotal: $${pedidoGuardado.total.toFixed(2)} \nNúmero de pedido: ${pedidoGuardado.id}`);
       
       vaciarCarrito();
       navigate('/catalog');

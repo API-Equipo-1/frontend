@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { User } from '../models/User';
+import { authService } from '../services/authService';
 import { userService } from '../services/userService';
 import { FormInput } from './FormInput';
 import { FormRow } from './FormRow';
@@ -72,7 +73,7 @@ const Register = () => {
     try {
       const newUser = User.fromFormData(formData);
       
-      await userService.createUser(newUser.toJSON());
+      await authService.register(newUser.toJSON());
 
       alert('¡Registro exitoso! Usuario creado correctamente.');
       

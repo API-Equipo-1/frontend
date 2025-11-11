@@ -30,19 +30,14 @@ export const ProductStats = () => {
     try {
       const product = await productService.getProductById(productId);
       
-      // Verify if the product belongs to the current user
-      if (String(product.createdBy) !== String(user.id)) {
-        setError('No tienes permiso para editar este producto');
-        return;
-      }
-
+      // Los permisos se validan en el backend
       setFormData({
         name: product.name,
         description: product.description,
         category: product.category,
         price: product.price.toString(),
         stock: product.stock.toString(),
-        image: product.image
+        image: product.image || ''
       });
     } catch (error) {
       setError('Error al cargar el producto: ' + error.message);
@@ -67,8 +62,7 @@ export const ProductStats = () => {
       const updatedProduct = {
         ...formData,
         price: parseFloat(formData.price),
-        stock: parseInt(formData.stock),
-        createdBy: String(user.id)
+        stock: parseInt(formData.stock)
       };
 
       await productService.updateProduct(productId, updatedProduct);

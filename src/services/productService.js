@@ -1,87 +1,59 @@
-const API_BASE_URL = 'http://localhost:3001';
+import { apiClient } from './apiClient';
 
-export const api = {
-  async get(endpoint) {
-    try {
-      const response = await fetch(`${API_BASE_URL}${endpoint}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('API GET error:', error);
-      throw error;
-    }
-  },
+// Función auxiliar para mapear producto del backend al formato frontend
+const mapProductToFrontend = (product) => ({
+  id: product.id,
+  name: product.nombre,
+  description: product.descripcion,
+  price: product.precio,
+  stock: product.stock,
+  category: product.categorias && product.categorias.length > 0 ? product.categorias[0].nombre : 'Sin categoría',
+  image: product.imagen || 'https://via.placeholder.com/300x200?text=No+Image',
+  _original: product
+});
 
-  async post(endpoint, data) {
-    try {
-      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('API POST error:', error);
-      throw error;
-    }
-  },
-
-  async put(endpoint, data) {
-    try {
-      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('API PUT error:', error);
-      throw error;
-    }
-  },
-
-  async delete(endpoint) {
-    try {
-      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-        method: 'DELETE'
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('API DELETE error:', error);
-      throw error;
-    }
+// Función auxiliar para mapear producto del frontend al formato backend
+const mapProductToBackend = (product) => {
+  const backendProduct = {
+    nombre: product.name,
+    descripcion: product.description,
+    precio: product.price,
+    stock: product.stock
+  };
+  
+  // Solo agregar imagen si existe
+  if (product.image) {
+    backendProduct.imagen = product.image;
   }
+  
+  // Solo agregar usuarioId si existe
+  if (product.userId) {
+    backendProduct.usuarioId = product.userId;
+  }
+  
+  return backendProduct;
 };
 
 export const productService = {
-  
   async getAllProducts() {
-    return await api.get('/products');
+    const products = await apiClient.get('/productos');
+    return products.map(mapProductToFrontend);
+  },
+  
+  async getProductsByUserId(userId) {
+    try {
+      const products = await apiClient.get(`/productos/usuario/${userId}`, true);
+      return products.map(mapProductToFrontend);
+    } catch (error) {
+      console.error('Error fetching products by user id:', error);
+      throw error;
+    }
   },
 
   async getProductById(id) {
     try {
-      const products = await this.getAllProducts();
-      const product = products.find(p => String(p.id) === String(id));
-      if (!product) {
-        throw new Error(`Product with id ${id} not found`);
-      }
-      return product;
+      const product = await apiClient.get(`/productos/${id}`);
+      return mapProductToFrontend(product);
     } catch (error) {
       console.error('Error fetching product by id:', error);
       throw error;
@@ -133,46 +105,72 @@ export const productService = {
 
   async createProduct(newProduct) {
     try {
-      // Don't manually assign ID - let JSON Server handle it
-      // JSON Server will automatically assign the next available ID
-      return await api.post('/products', newProduct);
+      const backendProduct = mapProductToBackend(newProduct);
+      
+      // Agregar categorías si existe category
+      if (newProduct.category) {
+        backendProduct.categorias = [{
+          nombre: newProduct.category
+        }];
+      }
+      
+      const createdProduct = await apiClient.post('/productos', backendProduct, true);
+      return mapProductToFrontend(createdProduct);
     } catch (error) {
       console.error('Error creating product:', error);
       throw error;
     }
   },
 
-  async deleteProduct(id) {
-    try {
-      // Ensure we're using the ID as-is, whether it's string or number
-      const response = await api.delete(`/products/${id}`);
-      return response;
-    } catch (error) {
-      console.error('Error deleting product:', error);
-      throw error;
-    }
-  },
-
   async updateProduct(id, updatedFields) {
     try {
-      const products = await this.getAllProducts();
-      const productIndex = products.findIndex(p => String(p.id) === String(id));
-      if (productIndex === -1) {
-        throw new Error(`Product with id ${id} not found`);
+      // Primero obtener el producto original para preservar las categorías
+      const originalProduct = await apiClient.get(`/productos/${id}`);
+      
+      // Mapear los campos del frontend al formato del backend
+      const backendUpdate = {};
+      
+      if (updatedFields.name !== undefined) backendUpdate.nombre = updatedFields.name;
+      if (updatedFields.description !== undefined) backendUpdate.descripcion = updatedFields.description;
+      if (updatedFields.price !== undefined) backendUpdate.precio = updatedFields.price;
+      if (updatedFields.stock !== undefined) backendUpdate.stock = updatedFields.stock;
+      if (updatedFields.image !== undefined) backendUpdate.imagen = updatedFields.image;
+      
+      // Si se proporciona category, buscar o crear la categoría
+      if (updatedFields.category !== undefined && updatedFields.category !== '') {
+        backendUpdate.categorias = [{
+          nombre: updatedFields.category
+        }];
+      } else {
+        // Preservar las categorías originales si no se proporciona nueva categoría
+        backendUpdate.categorias = originalProduct.categorias;
       }
-      const updatedProduct = { ...products[productIndex], ...updatedFields };
-      return await api.put(`/products/${id}`, updatedProduct);
+      
+      const updatedProduct = await apiClient.put(`/productos/${id}`, backendUpdate, true);
+      
+      return {
+        id: id,
+        price: updatedProduct.precio,
+        stock: updatedProduct.stock
+      };
     } catch (error) {
       console.error('Error updating product:', error);
       throw error;
     }
   },
 
+  async deleteProduct(id) {
+    try {
+      return await apiClient.delete(`/productos/${id}`, true);
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      throw error;
+    }
+  },
+
   async updateProductStock(productId, newStock) {
     try {
-      const product = await this.getProductById(productId);
-      const updatedProduct = { ...product, stock: newStock };
-      return await api.put(`/products/${productId}`, updatedProduct);
+      return await this.updateProduct(productId, { stock: newStock });
     } catch (error) {
       console.error('Error updating product stock:', error);
       throw error;
@@ -201,7 +199,6 @@ export const productService = {
       
       const results = await Promise.allSettled(updatePromises);
       
-      // Check if any updates failed
       const failures = results.filter(result => result.status === 'rejected');
       if (failures.length > 0) {
         throw new Error(`Stock update failed for ${failures.length} products`);

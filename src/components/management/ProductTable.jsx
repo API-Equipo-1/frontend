@@ -12,24 +12,21 @@ export const ProductTable = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user)
-    loadProducts();
+    if (user) {
+      loadProducts();
+    }
   }, [user]);
 
   const loadProducts = () => {
     setLoading(true);
-    productService.getAllProducts()
+    // Si es ADMIN, mostrar todos los productos, si no, solo los del usuario
+    const fetchProducts = user.role === 'ADMIN' 
+      ? productService.getAllProducts() 
+      : productService.getProductsByUserId(user.id);
+    
+    fetchProducts
       .then((data) => {
-        // Filter products to show only those created by the current user
-        // Handle both string and null user IDs
-        const userProducts = data.filter(product => {
-          // Ensure both values are compared as strings for consistency
-          const productCreatedBy = product.createdBy ? String(product.createdBy) : null;
-          const currentUserId = user.id ? String(user.id) : null;
-          
-          return productCreatedBy && currentUserId && productCreatedBy === currentUserId;
-        });
-        setProducts(userProducts);
+        setProducts(data);
         setLoading(false);
       })
       .catch((error) => {
@@ -47,8 +44,19 @@ export const ProductTable = () => {
       try {
         await productService.deleteProduct(productId);
         loadProducts(); // Reload the products after deletion
+        alert('Producto eliminado exitosamente');
       } catch (error) {
-        setError('Error al eliminar el producto: ' + error.message);
+        console.error('Error al eliminar:', error);
+        // Mostrar el mensaje específico del servidor
+        if (error.message.includes('asociado a uno o más pedidos')) {
+          alert('❌ No se puede eliminar este producto\n\n' + 
+                'El producto está asociado a uno o más pedidos realizados.\n' +
+                'Por motivos de integridad del historial de ventas, no es posible eliminarlo.\n\n' +
+                'Si el producto ya no está disponible, se recomienda modificar su stock a 0 para que no pueda ser comprado.');
+        } else {
+          alert('Error al eliminar el producto:\n' + error.message);
+        }
+        setError(null); // Limpiar el error después de mostrarlo
       }
     }
   };

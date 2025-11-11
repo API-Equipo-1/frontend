@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
-import { userService } from '../services/userService';
+import { authService } from '../services/authService';
 import { useAuth } from '../hooks/useAuth';
 import { FormInput } from './FormInput';
 import { FormRow } from './FormRow';
@@ -65,12 +65,12 @@ const Login = () => {
     setIsSubmitting(true);
 
     try {
-      // Intentar iniciar sesión usando userService
-      const loginResult = await userService.loginUser(formData.email, formData.password);
+      // Intentar iniciar sesión usando authService
+      const loginResult = await authService.login(formData.email, formData.password);
 
       if (loginResult.success) {
-        // Almacenar datos del usuario en el contexto de autenticación
-        login(loginResult.user);
+        // Almacenar datos del usuario en el contexto de autenticación (with JWT token)
+        login(loginResult.user, loginResult.token);
         navigate(redirectTo);
         
       } else {

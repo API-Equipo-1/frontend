@@ -4,6 +4,7 @@ import { Product } from "../components/Product";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import ProtectedRoute from "../components/ProtectedRoute";
+import AdminRoute from "../components/AdminRoute";
 import Checkout from "../components/Checkout";
 import { ProductTable } from "../components/management/ProductTable.jsx";
 import { ProductForm } from "../components/management/ProductForm.jsx";

@@ -1,4 +1,4 @@
-import "../styles/Navbar.css";
+import "../styles/NavBar.css";
 import { Link } from "react-router-dom";
 import { useMatch, useResolvedPath } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -46,7 +46,7 @@ export const Navbar = () => {
                                         "none";
                                 }}
                             >
-                                Gestionar Mis Productos
+                                Mis Productos
                             </button>
                             <button
                                 className="dropdown-menu-item logout"
