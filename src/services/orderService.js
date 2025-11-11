@@ -1,9 +1,9 @@
-import apiClient from './apiClient';
+import { apiClient } from './apiClient';
 
 /**
  * Servicio para gestionar pedidos
  */
-const orderService = {
+export const orderService = {
   /**
    * Crear un nuevo pedido desde el checkout
    * @param {Object} pedidoData - Datos del pedido
@@ -18,8 +18,8 @@ const orderService = {
    */
   async createPedido(pedidoData) {
     try {
-      const response = await apiClient.post('/pedidos/checkout', pedidoData);
-      return response.data;
+      const response = await apiClient.post('/pedidos/checkout', pedidoData, true);
+      return response;
     } catch (error) {
       console.error('Error al crear pedido:', error);
       throw error;
@@ -32,8 +32,8 @@ const orderService = {
    */
   async getAllPedidos() {
     try {
-      const response = await apiClient.get('/pedidos');
-      return response.data;
+      const response = await apiClient.get('/pedidos', true);
+      return response;
     } catch (error) {
       console.error('Error al obtener pedidos:', error);
       throw error;
@@ -47,8 +47,8 @@ const orderService = {
    */
   async getPedidoById(id) {
     try {
-      const response = await apiClient.get(`/pedidos/${id}`);
-      return response.data;
+      const response = await apiClient.get(`/pedidos/${id}`, true);
+      return response;
     } catch (error) {
       console.error('Error al obtener pedido:', error);
       throw error;
@@ -69,5 +69,3 @@ const orderService = {
     }));
   }
 };
-
-export default orderService;

@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/useAuth';
 import { FormInput } from './FormInput';
 import { FormRow } from './FormRow';
 import { productService } from '../services/productService';
-import orderService from '../services/orderService';
+import { orderService } from '../services/orderService';
 import { validateCheckoutForm } from '../utils/validation';
 import '../styles/Checkout.css';
 
