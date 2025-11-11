@@ -1,4 +1,4 @@
-import "../styles/Navbar.css";
+import "../styles/NavBar.css";
 import { Link } from "react-router-dom";
 import { useMatch, useResolvedPath } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -38,16 +38,18 @@ export const Navbar = () => {
                             Bienvenido/a, {user.firstName} ▼
                         </button>
                         <div id="user-dropdown-menu" className="user-dropdown-menu">
-                            <button
-                                className="dropdown-menu-item"
-                                onClick={() => {
-                                    navigate("/product-management");
-                                    document.getElementById("user-dropdown-menu").style.display =
-                                        "none";
-                                }}
-                            >
-                                Gestionar Mis Productos
-                            </button>
+                            {user.role === 'ADMIN' && (
+                                <button
+                                    className="dropdown-menu-item"
+                                    onClick={() => {
+                                        navigate("/product-management");
+                                        document.getElementById("user-dropdown-menu").style.display =
+                                            "none";
+                                    }}
+                                >
+                                    Gestionar Productos
+                                </button>
+                            )}
                             <button
                                 className="dropdown-menu-item logout"
                                 onClick={handleLogout}

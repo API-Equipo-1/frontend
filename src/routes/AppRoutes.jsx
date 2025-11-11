@@ -4,6 +4,7 @@ import { Product } from "../components/Product";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import ProtectedRoute from "../components/ProtectedRoute";
+import AdminRoute from "../components/AdminRoute";
 import Checkout from "../components/Checkout";
 import { ProductTable } from "../components/management/ProductTable.jsx";
 import { ProductForm } from "../components/management/ProductForm.jsx";
@@ -50,38 +51,38 @@ const AppRoutes = () => {
         } 
       />
       
-      {/* Rutas de gestión de productos - requieren autenticación */}
+      {/* Rutas de gestión de productos - solo para administradores */}
       <Route 
         path="/product-management" 
         element={
-          <ProtectedRoute>
+          <AdminRoute>
             <>
               <Navbar/>
               <ProductTable />
             </>
-          </ProtectedRoute>
+          </AdminRoute>
         } 
       />
       <Route 
         path="/product-form" 
         element={
-          <ProtectedRoute>
+          <AdminRoute>
             <>
               <Navbar/>
               <ProductForm />
             </>
-          </ProtectedRoute>
+          </AdminRoute>
         } 
       />
       <Route 
         path="/product-stats/:productId" 
         element={
-          <ProtectedRoute>
+          <AdminRoute>
             <>
               <Navbar/>
               <ProductStats />
             </>
-          </ProtectedRoute>
+          </AdminRoute>
         } 
       />
           

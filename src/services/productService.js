@@ -13,13 +13,21 @@ const mapProductToFrontend = (product) => ({
 });
 
 // Función auxiliar para mapear producto del frontend al formato backend
-const mapProductToBackend = (product) => ({
-  nombre: product.name,
-  descripcion: product.description,
-  precio: product.price,
-  stock: product.stock,
-  categorias: product.category ? [{ nombre: product.category }] : []
-});
+const mapProductToBackend = (product) => {
+  const backendProduct = {
+    nombre: product.name,
+    descripcion: product.description,
+    precio: product.price,
+    stock: product.stock
+  };
+  
+  // Solo agregar imagen si existe
+  if (product.image) {
+    backendProduct.imagen = product.image;
+  }
+  
+  return backendProduct;
+};
 
 export const productService = {
   async getAllProducts() {
@@ -93,16 +101,27 @@ export const productService = {
 
   async updateProduct(id, updatedFields) {
     try {
-      // El backend solo acepta precio y stock para actualizaciones
-      const backendUpdate = {
-        precio: updatedFields.price !== undefined ? updatedFields.price : undefined,
-        stock: updatedFields.stock !== undefined ? updatedFields.stock : undefined
-      };
+      // Primero obtener el producto original para preservar las categorías
+      const originalProduct = await apiClient.get(`/productos/${id}`);
       
-      // Eliminar valores undefined
-      Object.keys(backendUpdate).forEach(key => 
-        backendUpdate[key] === undefined && delete backendUpdate[key]
-      );
+      // Mapear los campos del frontend al formato del backend
+      const backendUpdate = {};
+      
+      if (updatedFields.name !== undefined) backendUpdate.nombre = updatedFields.name;
+      if (updatedFields.description !== undefined) backendUpdate.descripcion = updatedFields.description;
+      if (updatedFields.price !== undefined) backendUpdate.precio = updatedFields.price;
+      if (updatedFields.stock !== undefined) backendUpdate.stock = updatedFields.stock;
+      if (updatedFields.image !== undefined) backendUpdate.imagen = updatedFields.image;
+      
+      // Si se proporciona category, buscar o crear la categoría
+      if (updatedFields.category !== undefined && updatedFields.category !== '') {
+        backendUpdate.categorias = [{
+          nombre: updatedFields.category
+        }];
+      } else {
+        // Preservar las categorías originales si no se proporciona nueva categoría
+        backendUpdate.categorias = originalProduct.categorias;
+      }
       
       const updatedProduct = await apiClient.put(`/productos/${id}`, backendUpdate, true);
       

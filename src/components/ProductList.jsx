@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "..sstyles/ProductList.css";
+import "../styles/ProductList.css";
 
 const ProductList = ({
   onAgregarAlCarrito,
@@ -16,7 +16,7 @@ const ProductList = ({
     const fetchProductos = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://localhost:3001/productos");
+        const response = await fetch("http://localhost:8080/productos");
         if (!response.ok) {
           throw new Error("Error al cargar productos");
         }

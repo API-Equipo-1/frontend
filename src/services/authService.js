@@ -22,21 +22,23 @@ export const authService = {
   async login(email, password) {
     try {
       const credentials = { email, password };
-      const token = await apiClient.post('/auth/login', credentials);
+      const response = await apiClient.post('/auth/login', credentials);
       
-      if (token) {
+      if (response && response.token) {
         // Guardar el token JWT
-        localStorage.setItem('jwt-token', token);
+        localStorage.setItem('jwt-token', response.token);
         
-        // Crear objeto básico de usuario desde el email
+        // Usar los datos del usuario que vienen del backend
         const user = {
-          email: email,
-          username: email.split('@')[0],
-          firstName: email.split('@')[0],
-          lastName: ''
+          id: response.usuario.id,
+          email: response.usuario.email,
+          firstName: response.usuario.nombre,
+          lastName: response.usuario.apellido,
+          role: response.usuario.role,
+          username: response.usuario.email.split('@')[0]
         };
         
-        return { success: true, user, token };
+        return { success: true, user, token: response.token };
       } else {
         return { success: false, message: 'Credenciales inválidas' };
       }
