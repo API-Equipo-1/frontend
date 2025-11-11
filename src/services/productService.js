@@ -106,6 +106,14 @@ export const productService = {
   async createProduct(newProduct) {
     try {
       const backendProduct = mapProductToBackend(newProduct);
+      
+      // Agregar categorías si existe category
+      if (newProduct.category) {
+        backendProduct.categorias = [{
+          nombre: newProduct.category
+        }];
+      }
+      
       const createdProduct = await apiClient.post('/productos', backendProduct, true);
       return mapProductToFrontend(createdProduct);
     } catch (error) {
