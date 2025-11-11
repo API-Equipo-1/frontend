@@ -26,6 +26,11 @@ const mapProductToBackend = (product) => {
     backendProduct.imagen = product.image;
   }
   
+  // Solo agregar usuarioId si existe
+  if (product.userId) {
+    backendProduct.usuarioId = product.userId;
+  }
+  
   return backendProduct;
 };
 
@@ -33,6 +38,16 @@ export const productService = {
   async getAllProducts() {
     const products = await apiClient.get('/productos');
     return products.map(mapProductToFrontend);
+  },
+  
+  async getProductsByUserId(userId) {
+    try {
+      const products = await apiClient.get(`/productos/usuario/${userId}`, true);
+      return products.map(mapProductToFrontend);
+    } catch (error) {
+      console.error('Error fetching products by user id:', error);
+      throw error;
+    }
   },
 
   async getProductById(id) {

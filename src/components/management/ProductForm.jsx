@@ -30,17 +30,28 @@ export const ProductForm = () => {
     e.preventDefault();
     setError(null);
 
+    // Validar que el usuario esté autenticado
+    if (!user || !user.id) {
+      setError('Error: Usuario no autenticado. Por favor, inicia sesión nuevamente.');
+      return;
+    }
+
     try {
-      // Convert price and stock to numbers
+      // Convert price and stock to numbers and add userId
       const productData = {
         ...formData,
         price: parseFloat(formData.price),
-        stock: parseInt(formData.stock)
+        stock: parseInt(formData.stock),
+        userId: user.id  // Asignar el producto al usuario actual
       };
+
+      console.log('Datos del producto a crear:', productData);
+      console.log('Usuario actual:', user);
 
       await productService.createProduct(productData);
       navigate('/product-management'); // Navigate back to the product table
     } catch (error) {
+      console.error('Error completo:', error);
       setError('Error al crear el producto: ' + error.message);
     }
   };

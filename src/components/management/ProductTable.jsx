@@ -12,15 +12,20 @@ export const ProductTable = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user)
-    loadProducts();
+    if (user) {
+      loadProducts();
+    }
   }, [user]);
 
   const loadProducts = () => {
     setLoading(true);
-    productService.getAllProducts()
+    // Si es ADMIN, mostrar todos los productos, si no, solo los del usuario
+    const fetchProducts = user.role === 'ADMIN' 
+      ? productService.getAllProducts() 
+      : productService.getProductsByUserId(user.id);
+    
+    fetchProducts
       .then((data) => {
-        // Mostrar todos los productos (el backend ya filtra por permisos si es necesario)
         setProducts(data);
         setLoading(false);
       })

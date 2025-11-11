@@ -38,18 +38,16 @@ export const Navbar = () => {
                             Bienvenido/a, {user.firstName} ▼
                         </button>
                         <div id="user-dropdown-menu" className="user-dropdown-menu">
-                            {user.role === 'ADMIN' && (
-                                <button
-                                    className="dropdown-menu-item"
-                                    onClick={() => {
-                                        navigate("/product-management");
-                                        document.getElementById("user-dropdown-menu").style.display =
-                                            "none";
-                                    }}
-                                >
-                                    Gestionar Productos
-                                </button>
-                            )}
+                            <button
+                                className="dropdown-menu-item"
+                                onClick={() => {
+                                    navigate("/product-management");
+                                    document.getElementById("user-dropdown-menu").style.display =
+                                        "none";
+                                }}
+                            >
+                                Mis Productos
+                            </button>
                             <button
                                 className="dropdown-menu-item logout"
                                 onClick={handleLogout}

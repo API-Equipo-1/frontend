@@ -51,38 +51,38 @@ const AppRoutes = () => {
         } 
       />
       
-      {/* Rutas de gestión de productos - solo para administradores */}
+      {/* Rutas de gestión de productos - requieren autenticación */}
       <Route 
         path="/product-management" 
         element={
-          <AdminRoute>
+          <ProtectedRoute>
             <>
               <Navbar/>
               <ProductTable />
             </>
-          </AdminRoute>
+          </ProtectedRoute>
         } 
       />
       <Route 
         path="/product-form" 
         element={
-          <AdminRoute>
+          <ProtectedRoute>
             <>
               <Navbar/>
               <ProductForm />
             </>
-          </AdminRoute>
+          </ProtectedRoute>
         } 
       />
       <Route 
         path="/product-stats/:productId" 
         element={
-          <AdminRoute>
+          <ProtectedRoute>
             <>
               <Navbar/>
               <ProductStats />
             </>
-          </AdminRoute>
+          </ProtectedRoute>
         } 
       />
           
