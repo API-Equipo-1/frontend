@@ -90,7 +90,13 @@ export const apiClient = {
         return { success: true };
       }
       
+      // Si hay error, intentar obtener el mensaje del servidor
       if (!response.ok) {
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+        }
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
